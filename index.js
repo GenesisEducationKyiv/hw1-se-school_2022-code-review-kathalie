@@ -7,4 +7,4 @@ const port = 5000;
 app.use(express.urlencoded({extended: true}));
 app.use('/api', router);
 
-app.listen(port, () => console.log('SERVER STARTED ON PORT ' + port));
+app.listen(port, () => console.log(`SERVER STARTED ON PORT ${port}`));
