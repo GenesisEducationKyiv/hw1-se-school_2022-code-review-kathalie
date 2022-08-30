@@ -3,6 +3,7 @@ import * as emailService from '../services/emailService.js';
 async function subscribeEmail(req, res) {
     try {
         await emailService.subscribeEmail(req.body.email);
+        
         res.status(200).send();
     } catch(e) {
         if (e.message === '409')
