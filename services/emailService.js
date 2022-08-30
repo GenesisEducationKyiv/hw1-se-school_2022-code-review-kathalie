@@ -1,4 +1,5 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
+
 import {getRate} from './rateService.js'
 import * as fileManager from '../fileManager.js';
 
