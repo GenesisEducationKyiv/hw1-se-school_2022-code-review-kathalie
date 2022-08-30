@@ -8,13 +8,18 @@ const currencyTo = 'uah';
 const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@${apiVersion}/${date}/currencies/${currencyFrom}.json`;
 
 async function getRate() {
-    return fetch(url)
-        .then(res => {
-            if (res.ok) return res.json();
-            throw new Error('Something went wrong');
-        })
-        .then(data => data[currencyFrom][currencyTo].toString())
-        .catch(err => console.log(err));
+    try {
+        const rateResponse = await fetch(url);
+        const jsonRateResponse = await rateResponse.json();
+        const uahRate = jsonRateResponse[currencyFrom][currencyTo];
+        
+        return uahRate;
+    } catch (err) {
+        // якщо треба:
+        console.log('Rate Service Error', err);
+        
+        throw err;
+    }
 }
 
 export {getRate};
