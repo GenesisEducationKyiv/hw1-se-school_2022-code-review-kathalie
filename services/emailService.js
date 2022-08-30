@@ -42,14 +42,7 @@ function getSubscribers() {
 
 async function sendEmails() {
     let subscribers = getSubscribers();
-    let currentRate;
-
-    try {
-        currentRate = await getRate();
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
+    const currentRate = await getRate();
 
     for (let subscriber of subscribers) {
         sendEmail(subscriber, subject, text.replace(currentRatePlaceholder, currentRate))
