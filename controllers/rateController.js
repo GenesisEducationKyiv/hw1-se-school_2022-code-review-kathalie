@@ -2,10 +2,12 @@ import * as rateService from '../services/rateService.js';
 
 async function getRate(res) {
     try {
-        let currentRate = await rateService.getRate().then(value => value.toString());
+        const currentRate = await rateService.getRate();
+        // 200 можна винести в об'єкт з кодами
         res.status(200).send(currentRate);
-    } catch (e) {
-        res.status(500).json(e);
+    } catch (err) {
+        // 500 можна винести в об'єкт з кодами
+        res.status(500).json(err);
     }
 }
 
