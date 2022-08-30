@@ -1,9 +1,7 @@
 import fs from 'fs';
 
 function addToFile(textToAppend, fileName) {
-    fs.appendFile(textToAppend, fileName, err => {
-        if (err) throw err;
-    });
+    fs.appendFileSync(textToAppend, fileName);
 }
 
 function getFileContent(fileName) {
