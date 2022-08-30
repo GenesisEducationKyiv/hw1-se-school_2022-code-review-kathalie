@@ -41,7 +41,7 @@ function getSubscribers() {
 
 
 async function sendEmails() {
-    let subscribers = getSubscribers();
+    const subscribers = getSubscribers();
     const currentRate = await getRate();
 
     const preparedEmailText = text.replace(currentRatePlaceholder, currentRate);
