@@ -6,9 +6,13 @@ function addToFile(textToAppend, fileName) {
 
 function getFileContent(fileName) {
     let fileContent = fs.readFileSync(fileName, 'utf-8').split('\n');
-    if (fileContent[fileContent.length - 1].replace(" ", "") === '')
-        fileContent.pop();
-    return fileContent;
+    const lastFileLine = fileLines[fileLines.length - 1];
+    const trimmedLastFileLine = lastFileLine.replace(' ', '');
+    if (!trimmedLastFileLine) {
+        fileLines.pop();
+    }
+    
+    return fileLines;
 }
 
 export {addToFile, getFileContent}
