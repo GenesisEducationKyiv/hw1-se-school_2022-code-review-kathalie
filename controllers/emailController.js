@@ -16,6 +16,7 @@ async function subscribeEmail(req, res) {
 async function sendEmails(res) {
     try {
         await emailService.sendEmails();
+        
         res.status(200).send();
     } catch(e) {
         res.status(500).json(e.message);
