@@ -61,7 +61,7 @@ function getTransporter() {
 }
 
 async function sendEmail(emailReceiver, emailSubject, emailText) {
-    let info = await getTransporter().sendMail({
+    const info = await getTransporter().sendMail({
         from: sender,
         to: emailReceiver,
         subject: emailSubject,
