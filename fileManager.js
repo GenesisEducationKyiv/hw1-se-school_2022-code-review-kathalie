@@ -5,7 +5,7 @@ function addToFile(textToAppend, fileName) {
 }
 
 function getFileContent(fileName) {
-    let fileContent = fs.readFileSync(fileName, 'utf-8').split('\n');
+    const fileLines = fs.readFileSync(fileName, 'utf-8').split('\n');
     const lastFileLine = fileLines[fileLines.length - 1];
     const trimmedLastFileLine = lastFileLine.replace(' ', '');
     if (!trimmedLastFileLine) {
