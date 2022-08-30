@@ -1,4 +1,5 @@
 import Router from 'express';
+
 import * as rateController from './controllers/rateController.js';
 import * as emailController from './controllers/emailController.js';
 
