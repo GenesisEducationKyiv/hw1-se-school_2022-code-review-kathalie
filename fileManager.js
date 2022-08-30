@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 function addToFile(textToAppend, fileName) {
     fs.appendFile(textToAppend, fileName, err => {
