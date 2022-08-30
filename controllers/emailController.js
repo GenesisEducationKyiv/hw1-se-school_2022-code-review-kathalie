@@ -18,8 +18,8 @@ async function sendEmails(res) {
         await emailService.sendEmails();
         
         res.status(200).send();
-    } catch(e) {
-        res.status(500).json(e.message);
+    } catch(err) {
+        res.status(500).json(err);
     }
 }
 
