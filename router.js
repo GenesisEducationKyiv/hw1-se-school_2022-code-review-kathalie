@@ -1,12 +1,13 @@
 import Router from 'express';
 
-import * as rateController from './controllers/rateController.js';
-import * as emailController from './controllers/emailController.js';
+import * as rateController from './controllers/rate-controller.js';
+import * as emailController from './controllers/email-controller.js';
+import { ApiPath } from './constants/api-paths.js';
 
 const router = new Router();
 
-router.get('/rate', rateController.getRate);
-router.post('/subscribe', emailController.subscribeEmail);
-router.post('/sendEmails', emailController.sendEmails);
+router.get(ApiPath.GET_RATE, rateController.getRate);
+router.post(ApiPath.SUBSCRIBE, emailController.subscribeEmail);
+router.post(ApiPath.SEND_EMAILS, emailController.sendEmails);
 
 export default router;

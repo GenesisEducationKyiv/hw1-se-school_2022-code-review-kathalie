@@ -12,12 +12,11 @@ async function getRate() {
         const rateResponse = await fetch(url);
         const jsonRateResponse = await rateResponse.json();
         const uahRate = jsonRateResponse[currencyFrom][currencyTo];
-        
+
         return uahRate;
     } catch (err) {
-        // якщо треба:
         console.log('Rate Service Error', err);
-        
+
         throw err;
     }
 }

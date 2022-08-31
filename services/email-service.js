@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
-import * as rateService from './rateService.js'
-import * as fileManager from '../fileManager.js';
+import * as rateService from './rate-service.js'
+import * as fileManager from '../file-manager.js';
 
 const subscribersFileName = 'emails.txt';
 const subject = process.env.EMAIL_SUBJECT || 'Поточний курс біткоїна в гривні';
@@ -11,14 +11,10 @@ const service = process.env.EMAIL_SERVICE || 'gmail';
 const sender = process.env.EMAIL_USER_NAME;
 const senderPas = process.env.EMAIL_PASSWORD;
 
-async function subscribeEmail(email) {
-    if (emailExists(email))
-        throw new Error('409');
-    try {
-        saveEmail(email);
-    } catch (err) {
-        throw new Error('Failed to subscribe an email. ' + err.message);
-    }
+function isEmailValid(email) {
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    return email !== '' && email.match(emailPattern)
 }
 
 function emailExists(email) {
@@ -27,6 +23,20 @@ function emailExists(email) {
 
 function saveEmail(email) {
     fileManager.addToFile(subscribersFileName, `${email}\n`);
+}
+
+async function subscribeEmail(email) {
+    if (!isEmailValid(email))
+        throw new InvalidEmailError();
+
+    if (emailExists(email))
+        throw new UserEmailAlreadyExistsError();
+
+    try {
+        saveEmail(email);
+    } catch (err) {
+        throw new Error('Failed to subscribe an email. ' + err.message);
+    }
 }
 
 function getSubscribers() {
@@ -42,7 +52,7 @@ function getSubscribers() {
 
 async function sendEmails() {
     const subscribers = getSubscribers();
-    const currentRate = await getRate();
+    const currentRate = await rateService.getRate();
 
     const preparedEmailText = text.replace(currentRatePlaceholder, currentRate);
 
@@ -80,7 +90,7 @@ const timeDelay = 1000*60*10; // 10 min
 setInterval(await automaticSending, timeDelay);
 
 async function automaticSending() {
-    const newRate = await getRate();
+    const newRate = await rateService.getRate();
 
     if (newRate === rate) return;
 
