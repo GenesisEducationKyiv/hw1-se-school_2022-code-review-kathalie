@@ -15,7 +15,7 @@ async function subscribeEmail(req, res) {
     }
 }
 
-async function sendEmails(res) {
+async function sendEmails(_req, res) {
     try {
         await emailService.sendEmails();
         res.status(HttpStatusCode.OK).send();

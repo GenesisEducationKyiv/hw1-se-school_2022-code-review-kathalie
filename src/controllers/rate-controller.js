@@ -1,7 +1,7 @@
 import * as rateService from '../services/rate-service.js';
 import { HttpStatusCode } from '../constants/http-status-codes.js';
 
-async function getRate(res) {
+async function getRate(_req, res) {
     try {
         let currentRate = await rateService.getRate().then(value => value.toString());
         res.status(HttpStatusCode.OK).send(currentRate);
