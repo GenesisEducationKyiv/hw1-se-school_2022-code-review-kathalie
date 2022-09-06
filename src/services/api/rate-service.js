@@ -22,3 +22,7 @@ async function getRate() {
 }
 
 export {getRate};
+
+export const rateServiceForTesting = {
+    url
+};

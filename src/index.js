@@ -8,3 +8,5 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api', router);
 
 app.listen(PORT, () => console.log(`SERVER STARTED ON PORT ${PORT}`));
+
+export default app;

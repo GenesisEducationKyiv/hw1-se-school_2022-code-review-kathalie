@@ -1,20 +1,14 @@
 import nodemailer from 'nodemailer';
 
 import * as rateService from './rate-service.js'
-import * as fileManager from '../file-manager.js';
-
-const subscribersFileName = 'emails.txt';
-const subject = process.env.EMAIL_SUBJECT || 'Поточний курс біткоїна в гривні';
-const currentRatePlaceholder = '%r%';
-const text = process.env.EMAIL_TEXT || `1 BTC = ${currentRatePlaceholder} UAH`;
-const service = process.env.EMAIL_SERVICE || 'gmail';
-const sender = process.env.EMAIL_USER_NAME;
-const senderPas = process.env.EMAIL_PASSWORD;
+import * as fileManager from '../../file-manager.js';
+import {Placeholders} from "../../constants/placeholders.js";
+import {Env} from "../../constants/env.js";
 
 function isEmailValid(email) {
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-    return email !== '' && email.match(emailPattern)
+    return email !== '' && email.match(emailPattern) !== null;
 }
 
 function emailExists(email) {
@@ -22,7 +16,7 @@ function emailExists(email) {
 }
 
 function saveEmail(email) {
-    fileManager.addToFile(subscribersFileName, `${email}\n`);
+    fileManager.addToFile(Env.subscribersFileName, `${email}\n`);
 }
 
 async function subscribeEmail(email) {
@@ -43,7 +37,7 @@ function getSubscribers() {
     let allSubscribers = [];
 
     try {
-        allSubscribers = fileManager.getFileContent(subscribersFileName);
+        allSubscribers = fileManager.getFileContent(Env.subscribersFileName);
     } catch (ignored) {}
 
     return allSubscribers;
@@ -54,27 +48,27 @@ async function sendEmails() {
     const subscribers = getSubscribers();
     const currentRate = await rateService.getRate();
 
-    const preparedEmailText = text.replace(currentRatePlaceholder, currentRate);
+    const preparedEmailText = Env.text.replace(Placeholders.currentRatePlaceholder, currentRate);
 
     for (let subscriber of subscribers) {
-        sendEmail(subscriber, subject, preparedEmailText)
+        sendEmail(subscriber, Env.subject, preparedEmailText)
             .catch(err => console.log(err));
     }
 }
 
 function getTransporter() {
     return nodemailer.createTransport({
-        service: service,
+        service: Env.service,
         auth: {
-            user: sender,
-            pass: senderPas,
+            user: Env.senderEmail,
+            pass: Env.senderPassword,
         },
     });
 }
 
 async function sendEmail(emailReceiver, emailSubject, emailText) {
     const info = await getTransporter().sendMail({
-        from: sender,
+        from: Env.senderEmail,
         to: emailReceiver,
         subject: emailSubject,
         text: emailText,
@@ -83,21 +77,10 @@ async function sendEmail(emailReceiver, emailSubject, emailText) {
     console.log(`Message sent: ${info.messageId} (sent to: ${emailReceiver})`);
 }
 
-// AUTOMATIC SENDING
-let rate;
-const timeDelay = 1000*60*10; // 10 min
-
-setInterval(await automaticSending, timeDelay);
-
-async function automaticSending() {
-    const newRate = await rateService.getRate();
-
-    if (newRate === rate) return;
-
-    rate = newRate;
-    try {
-        await sendEmails();
-    } catch(ignored) {}
-}
-
 export {subscribeEmail, sendEmails};
+
+export const emailServiceForTesting = {
+    isEmailValid,
+    emailExists,
+
+};
