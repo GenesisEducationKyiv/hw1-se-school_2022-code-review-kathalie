@@ -1,8 +1,7 @@
 import {jest} from '@jest/globals';
 
-import {getRate} from '../../../services/api/rate-service.js'
-import {rateServiceForTesting} from "../../../services/api/rate-service.js";
-import {HttpStatusCodes} from "../../../constants/http-status-codes.js";
+import {getRate} from '../../services/api/rate-service.js'
+import {rateServiceForTesting} from "../../services/api/rate-service.js";
 
 jest.unstable_mockModule('node-fetch', () => ({
     fetch: jest.fn(),
@@ -13,8 +12,8 @@ const {fetch} = await import('node-fetch');
 describe('When getRate function is called', () => {
     const fetchUrl = rateServiceForTesting.url;
 
-    afterAll(() => {
-        jest.restoreAllMocks();
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
     it('returns actual BTC to UAH rate if receives correct data schema', async () => {
@@ -34,6 +33,7 @@ describe('When getRate function is called', () => {
                     "uah": 735307.95522,
                 }
             };
+
         const mockRate = 735307.95522;
 
         await expectationsFromReceiving(mockResponseBody, mockRate);
@@ -53,8 +53,19 @@ describe('When getRate function is called', () => {
     async function expectationsFromReceiving(mockResponseBody, result) {
         global.mockingFetch = true;
 
-        fetch.mockImplementation(() => mockResponseBody);
-        const actualRate = await getRate();
+        const mockResponse = Promise.resolve({
+            ok: true,
+            json: () => {
+                return mockResponseBody;
+            },
+        });
+
+        fetch.mockImplementationOnce(() => mockResponse);
+
+        let actualRate;
+        try {
+            actualRate = await getRate();
+        } catch (_) {}
 
         expect(actualRate).toEqual(result);
         expect(fetch).toHaveBeenCalledTimes(1);

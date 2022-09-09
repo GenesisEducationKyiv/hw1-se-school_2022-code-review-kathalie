@@ -23,12 +23,12 @@ async function getResponseFromOuterAPI(url) {
     if (mockingFetch) {
         const {fetch} = await import('node-fetch');
 
-        return fetch(url);
+        return await fetch(url);
     }
     else {
         const {default: fetch} =  await import('node-fetch');
 
-        return fetch(url);
+        return await fetch(url);
     }
 }
 

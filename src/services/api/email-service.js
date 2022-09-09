@@ -53,7 +53,7 @@ async function sendEmails() {
     const preparedEmailText = Env.text.replace(Placeholders.currentRatePlaceholder, currentRate);
 
     for (let subscriber of subscribers) {
-        sendEmail(subscriber, Env.subject, preparedEmailText)
+         await sendEmail(subscriber, Env.subject, preparedEmailText)
             .catch(err => console.log(err));
     }
 }
