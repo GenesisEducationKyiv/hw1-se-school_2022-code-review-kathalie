@@ -1,7 +1,7 @@
 import {emailServiceForTesting} from '../api/email-service.js';
 
 describe('Testing functions for emails validation', () => {
-    const validation = emailServiceForTesting.isEmailValid;
+    const validate = emailServiceForTesting.isEmailValid;
 
     it('should not pass invalid emails', () => {
         const invalidEmails = {
@@ -20,7 +20,7 @@ describe('Testing functions for emails validation', () => {
 
         let resultsOfValidation = {};
         for (const key in invalidEmails) {
-            resultsOfValidation[key] = validation(invalidEmails[key]);
+            resultsOfValidation[key] = validate(invalidEmails[key]);
         }
 
         for (const key in invalidEmails) {
@@ -34,11 +34,12 @@ describe('Testing functions for emails validation', () => {
             oneDotDomain: 'no-reply@example.com',
             emailWithoutDash: 'noreply@example.com',
             emailWithUnderscore: 'no_reply@example.com.ua',
+            emailWithNumbers: 'noreply123@example1.com.ua'
         }
 
         let resultsOfValidation = {};
         for (const key in validEmails) {
-            resultsOfValidation[key] = validation(validEmails[key]);
+            resultsOfValidation[key] = validate(validEmails[key]);
         }
 
         for (const key in validEmails) {

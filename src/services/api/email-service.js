@@ -21,6 +21,7 @@ async function subscribeEmail(email) {
         throw new UserEmailAlreadyExistsError();
 
     const emailSuccessfullySubscribed = subscriptionManager.addSubscriber(email);
+
     console.log(emailSuccessfullySubscribed ? `${email} successfully subscribed.` : `Failed to subscribe ${email}`);
 }
 

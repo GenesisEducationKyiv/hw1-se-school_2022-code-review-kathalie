@@ -1,7 +1,9 @@
 import fs from 'fs';
-import {FileNames} from './constants/file-names.js';
 
-const SUBSCRIBERS_FILE_NAME = FileNames.subscribers;
+import {FileNames} from './constants/file-names.js';
+import {States} from './constants/states.js';
+
+const SUBSCRIBERS_FILE_NAME = States.testIsRunning ? 'test.json' : FileNames.subscribers;
 
 function getAllSubscribers(fileName = SUBSCRIBERS_FILE_NAME) {
     try {
@@ -53,4 +55,14 @@ function subscriberExists(email) {
     return getAllSubscribers().includes(email.toString());
 }
 
-export {addSubscriber, getAllSubscribers, removeSubscriber, subscriberExists}
+function deleteFileWithSubscribers(fileName = SUBSCRIBERS_FILE_NAME) {
+    fs.unlink(fileName, (err) => {
+        if (err) {
+            console.log("Failed to delete file.")
+        }
+
+        console.log("File is deleted.");
+    });
+}
+
+export {addSubscriber, getAllSubscribers, removeSubscriber, subscriberExists, deleteFileWithSubscribers}
