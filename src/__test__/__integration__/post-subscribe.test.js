@@ -4,6 +4,7 @@ import request from 'supertest';
 import {app} from '../../index.js';
 import {ApiPaths} from "../../constants/api-paths.js";
 import {HttpStatusCodes} from "../../constants/http-status-codes.js";
+import {FileNames} from '../../constants/file-names.js';
 import * as subscriptionsManager from '../../subscriptions-manager.js';
 
 describe('POST /subscribe', () => {
@@ -11,54 +12,38 @@ describe('POST /subscribe', () => {
     const correctEmail = 'no-reply@example.com';
     const incorrectEmail = 'incorrect-email';
 
-    beforeEach(() => {
-        subscriptionsManager.deleteFileWithSubscribers('test.json');
-    });
-
     afterEach( () => {
         jest.restoreAllMocks();
     });
 
+    // afterAll(() => {
+    //     subscriptionsManager.deleteFileWithSubscribers(FileNames.testingSubscribers);
+    // });
+
     it('should return 200 status code if correct and unique email is sent', async() => {
-        const bodyWithEmail = {
-            email: correctEmail
-        };
+        subscriptionsManager.deleteFileWithSubscribers(FileNames.testingSubscribers);
 
-        const response = await request(app)
-            .post(subscribeEndpoint)
-            .send(bodyWithEmail);
-
-        const statusCode = response.statusCode;
-
-        expect(statusCode).toBe(HttpStatusCodes.OK);
+        await expectationFromSubscribing(correctEmail, HttpStatusCodes.OK);
     });
 
     it('should return 400 status code if incorrect email is sent', async () => {
-        const bodyWithEmail = {
-            email: incorrectEmail
-        };
-
-        const response = await request(app)
-            .post(subscribeEndpoint)
-            .send(bodyWithEmail);
-
-        const statusCode = response.statusCode;
-
-        expect(statusCode).toBe(HttpStatusCodes.BAD_REQUEST);
+        await expectationFromSubscribing(incorrectEmail, HttpStatusCodes.BAD_REQUEST);
     });
 
     it('should return 409 status code if email already exists', async () => {
-        const bodyWithEmail = {
-            email: correctEmail
-        };
-
         subscriptionsManager.addSubscriber(correctEmail);
+
+        await expectationFromSubscribing(correctEmail, HttpStatusCodes.CONFLICT);
+    });
+
+    async function expectationFromSubscribing(email, expectedStatusCode) {
+        const requestBody = `email=${email}`;
+
         const response = await request(app)
             .post(subscribeEndpoint)
-            .send(bodyWithEmail);
+            .set('Accept', 'application/x-www-form-urlencoded')
+            .send(requestBody);
 
-        const statusCode = response.statusCode;
-
-        expect(statusCode).toBe(HttpStatusCodes.CONFLICT);
-    });
+        expect(response.statusCode).toBe(expectedStatusCode);
+    }
 });

@@ -21,5 +21,5 @@ describe('GET /rate', () => {
         const exchangeRateIsANumber = !isNaN(exchangeRate) && typeof exchangeRate === 'number';
 
         expect(exchangeRateIsANumber).toBeTruthy();
-    })
+    });
 });

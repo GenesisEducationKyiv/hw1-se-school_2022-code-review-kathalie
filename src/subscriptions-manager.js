@@ -3,7 +3,7 @@ import fs from 'fs';
 import {FileNames} from './constants/file-names.js';
 import {States} from './constants/states.js';
 
-const SUBSCRIBERS_FILE_NAME = States.testIsRunning ? 'test.json' : FileNames.subscribers;
+const SUBSCRIBERS_FILE_NAME = States.testIsRunning ? FileNames.testingSubscribers : FileNames.subscribers;
 
 function getAllSubscribers(fileName = SUBSCRIBERS_FILE_NAME) {
     try {
@@ -56,13 +56,11 @@ function subscriberExists(email) {
 }
 
 function deleteFileWithSubscribers(fileName = SUBSCRIBERS_FILE_NAME) {
-    fs.unlink(fileName, (err) => {
-        if (err) {
-            console.log("Failed to delete file.")
-        }
-
-        console.log("File is deleted.");
-    });
+    try {
+        fs.unlinkSync(fileName);
+    } catch (err) {
+        console.log(`Failed to delete file. ${err}`)
+    }
 }
 
 export {addSubscriber, getAllSubscribers, removeSubscriber, subscriberExists, deleteFileWithSubscribers}

@@ -1,4 +1,4 @@
-import {emailServiceForTesting} from '../api/email-service.js';
+import {emailServiceForTesting} from '../../../services/api/email-service.js';
 
 describe('Testing functions for emails validation', () => {
     const validate = emailServiceForTesting.isEmailValid;
