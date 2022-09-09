@@ -1,15 +1,13 @@
-import fetch from 'node-fetch';
-
 const apiVersion = 1;
 const date = 'latest';
 const currencyFrom = 'btc';
 const currencyTo = 'uah';
 
-const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@${apiVersion}/${date}/currencies/${currencyFrom}.json`;
+const apiUrl = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@${apiVersion}/${date}/currencies/${currencyFrom}.json`;
 
 async function getRate() {
     try {
-        const rateResponse = await fetch(url);
+        const rateResponse = await getResponseFromOuterAPI(apiUrl);
         const jsonRateResponse = await rateResponse.json();
         const uahRate = jsonRateResponse[currencyFrom][currencyTo];
 
@@ -21,8 +19,25 @@ async function getRate() {
     }
 }
 
+async function getResponseFromOuterAPI(url) {
+    if (mockingFetch) {
+        const {fetch} = await import('node-fetch');
+
+        console.log('MOCKING FETCH');
+
+        return fetch(url);
+    }
+    else {
+        const {default: fetch} =  await import('node-fetch');
+
+        console.log('ORIGINAL IMPLEMENTATION OF FETCH');
+
+        return fetch(url);
+    }
+}
+
 export {getRate};
 
 export const rateServiceForTesting = {
-    url
+    url: apiUrl
 };

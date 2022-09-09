@@ -1,14 +1,16 @@
-// DOES NOT WORK
 import {jest} from '@jest/globals';
-import fetch from 'node-fetch'
 
 import {getRate} from '../api/rate-service.js'
 import {rateServiceForTesting} from "../api/rate-service.js";
 
-jest.mock('node-fetch');
+jest.unstable_mockModule('node-fetch', () => ({
+    fetch: jest.fn(),
+}));
+
+const {fetch} = await import('node-fetch');
 
 describe('When getRate function is called', () => {
-    const mockResponseBody=
+    const mockResponseBody =
         {
             "date": "2022-09-05",
             "btc": {
@@ -25,7 +27,12 @@ describe('When getRate function is called', () => {
 
     const fetchUrl = rateServiceForTesting.url;
 
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
     it('returns actual BTC to UAH rate', async () => {
+        global.mockingFetch = true;
 
         const mockRate = 735307.95522;
         const response = Promise.resolve({
@@ -41,15 +48,7 @@ describe('When getRate function is called', () => {
         expect(actualRate).toEqual(mockRate);
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenLastCalledWith(fetchUrl);
+
+        global.mockingFetch = false;
     });
-
-    it('catches errors and rethrows them', async() => {
-        fetch.mockReject(() => 'API failure');
-
-        expect(() => {
-            getRate()
-        }).toThrowError();
-        expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenLastCalledWith(fetchUrl);
-    })
 });

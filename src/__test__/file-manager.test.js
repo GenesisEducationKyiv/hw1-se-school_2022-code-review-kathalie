@@ -1,7 +1,7 @@
 import {jest} from '@jest/globals';
 import fs from 'fs';
 
-import * as fileManager from '../file-manager.js';
+// import * as fileManager from '../subscriptions-manager.js';
 
 jest.mock('fs');
 
