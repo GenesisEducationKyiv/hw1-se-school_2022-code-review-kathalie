@@ -20,16 +20,9 @@ async function getRate() {
 }
 
 async function getResponseFromOuterAPI(url) {
-    if (mockingFetch) {
-        const {fetch} = await import('node-fetch');
+    const fetch = await import('node-fetch');
 
-        return await fetch(url);
-    }
-    else {
-        const {default: fetch} =  await import('node-fetch');
-
-        return await fetch(url);
-    }
+    return await fetch.default(url);
 }
 
 export {getRate};

@@ -3,22 +3,21 @@ import {jest} from '@jest/globals';
 import {getRate} from '../../services/api/rate-service.js'
 import {rateServiceForTesting} from "../../services/api/rate-service.js";
 
-jest.unstable_mockModule('node-fetch', () => ({
-    fetch: jest.fn(),
-}));
-
-const {fetch} = await import('node-fetch');
-
 describe('When getRate function is called', () => {
     const fetchUrl = rateServiceForTesting.url;
 
+    beforeEach(async () => {
+        jest.unstable_mockModule('node-fetch', () => ({
+            default: jest.fn(),
+        }));
+    })
+
     afterEach(() => {
         jest.clearAllMocks();
+        jest.resetModules();
     });
 
     it('returns actual BTC to UAH rate if receives correct data schema', async () => {
-        global.mockingFetch = true;
-
         const mockResponseBody =
             {
                 "date": "2022-09-05",
@@ -37,8 +36,6 @@ describe('When getRate function is called', () => {
         const mockRate = 735307.95522;
 
         await expectationsFromReceiving(mockResponseBody, mockRate);
-
-        global.mockingFetch = false;
     });
 
     it('does NOT return actual BTC to UAH rate if receives INCORRECT data schema', async () => {
@@ -51,8 +48,6 @@ describe('When getRate function is called', () => {
     });
 
     async function expectationsFromReceiving(mockResponseBody, result) {
-        global.mockingFetch = true;
-
         const mockResponse = Promise.resolve({
             ok: true,
             json: () => {
@@ -60,7 +55,9 @@ describe('When getRate function is called', () => {
             },
         });
 
-        fetch.mockImplementationOnce(() => mockResponse);
+        const fetch = await import('node-fetch');
+
+        fetch.default.mockImplementationOnce(() => mockResponse);
 
         let actualRate;
         try {
@@ -68,9 +65,7 @@ describe('When getRate function is called', () => {
         } catch (_) {}
 
         expect(actualRate).toEqual(result);
-        expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenLastCalledWith(fetchUrl);
-
-        global.mockingFetch = false;
+        expect(fetch.default).toHaveBeenCalledTimes(1);
+        expect(fetch.default).toHaveBeenLastCalledWith(fetchUrl);
     }
 });

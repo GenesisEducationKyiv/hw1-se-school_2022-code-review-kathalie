@@ -10,6 +10,4 @@ app.use('/api', router);
 
 app.listen(PORT, () => console.log(`SERVER STARTED ON PORT ${PORT}`));
 
-global.mockingFetch = false;
-
 export { app };
