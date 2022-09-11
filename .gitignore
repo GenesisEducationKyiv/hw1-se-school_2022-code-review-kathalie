@@ -1,6 +1,7 @@
 node_modules/
 .idea/
-emails.txt
+emails.json
+test.json
 *.iml
 *.log
 *.env
