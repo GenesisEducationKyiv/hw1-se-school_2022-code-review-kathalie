@@ -1,13 +1,13 @@
 import express from 'express';
-import router from "./router.js";
-import { PORT } from "./constants/ports.js";
+import apiRouter from "./routers/api-router.js";
+import { Ports } from "./constants/ports.js";
 
 const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use('/api', router);
+app.use('/api', apiRouter);
 
-app.listen(PORT, () => console.log(`SERVER STARTED ON PORT ${PORT}`));
+app.listen(Ports.MAIN_PORT, () => console.log(`SERVER STARTED ON PORT ${Ports.MAIN_PORT}`));
 
 export { app };

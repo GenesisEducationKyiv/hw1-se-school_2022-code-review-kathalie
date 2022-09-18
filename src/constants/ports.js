@@ -1,1 +1,3 @@
-export const PORT = 5000;
+export const Ports = {
+    MAIN_PORT: 5000
+}

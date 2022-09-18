@@ -34,11 +34,11 @@ describe('POST /subscribe', () => {
     const incorrectEmail = 'incorrect-email';
 
     beforeEach(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.testingSubscribers);
+        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
     });
 
     afterAll(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.testingSubscribers);
+        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
     });
 
     it('should return 200 status code if correct and unique email is sent', async () => {
@@ -87,7 +87,7 @@ describe('POST /sendEmails', () => {
     });
 
     afterAll(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.testingSubscribers);
+        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
     });
 
     it ('should response with status code 200 when emails are sent', async() => {

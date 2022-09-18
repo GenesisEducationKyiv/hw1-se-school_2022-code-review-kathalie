@@ -1,4 +1,4 @@
 export const FileNames = {
-    subscribers: 'emails.json',
-    testingSubscribers: 'test.json'
+    SUBSCRIBERS: 'emails.json',
+    TESTING_SUBSCRIBERS: 'test.json'
 }

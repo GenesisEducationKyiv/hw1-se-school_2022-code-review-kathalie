@@ -3,7 +3,7 @@ import fs from 'fs';
 import {FileNames} from './constants/file-names.js';
 import {States} from './constants/states.js';
 
-const SUBSCRIBERS_FILE_NAME = States.testIsRunning ? FileNames.testingSubscribers : FileNames.subscribers;
+const SUBSCRIBERS_FILE_NAME = States.TEST_IS_RUNNING ? FileNames.TESTING_SUBSCRIBERS : FileNames.SUBSCRIBERS;
 
 function getAllSubscribers(fileName = SUBSCRIBERS_FILE_NAME) {
     try {

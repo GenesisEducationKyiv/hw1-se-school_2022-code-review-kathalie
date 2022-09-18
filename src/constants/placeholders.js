@@ -1,3 +1,3 @@
 export const Placeholders = {
-    currentRatePlaceholder: '%r%'
+    CURRENT_RATE_PLACEHOLDER: '%r%'
 }

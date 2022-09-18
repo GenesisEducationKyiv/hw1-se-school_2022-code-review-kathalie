@@ -27,17 +27,17 @@ async function subscribeEmail(email) {
 
 function getTransporter() {
     return nodemailer.createTransport({
-        service: Env.service,
+        service: Env.SERVICE,
         auth: {
-            user: Env.senderEmail,
-            pass: Env.senderPassword,
+            user: Env.SENDER_EMAIL,
+            pass: Env.SENDER_PASSWORD,
         },
     });
 }
 
 async function sendEmail(emailReceiver, emailSubject, emailText) {
     const info = await getTransporter().sendMail({
-        from: Env.senderEmail,
+        from: Env.SENDER_EMAIL,
         to: emailReceiver,
         subject: emailSubject,
         text: emailText,
@@ -50,10 +50,10 @@ async function sendEmails() {
     const subscribers = subscriptionManager.getAllSubscribers();
     const currentRate = await rateService.getRate();
 
-    const preparedEmailText = Env.text.replace(Placeholders.currentRatePlaceholder, currentRate);
+    const preparedEmailText = Env.TEXT.replace(Placeholders.CURRENT_RATE_PLACEHOLDER, currentRate);
 
     for (let subscriber of subscribers) {
-         await sendEmail(subscriber, Env.subject, preparedEmailText)
+         await sendEmail(subscriber, Env.SUBJECT, preparedEmailText)
             .catch(err => console.log(err));
     }
 }
