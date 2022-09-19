@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "esnext",
+    "watch": true
+  },
+  "include": ["./src/**/*"]
+}

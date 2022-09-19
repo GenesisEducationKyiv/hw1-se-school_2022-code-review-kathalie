@@ -3,8 +3,10 @@ import request from "supertest";
 import {app} from "../../index.js";
 import {HttpStatusCodes} from "../../constants/http-status-codes.js";
 import {jest} from "@jest/globals";
-import * as subscriptionsManager from "../../subscriptions-manager.js";
+import {JsonFileManager} from "../../file-managers/json-file-manager.js";
 import {FileNames} from "../../constants/file-names.js";
+
+const fileManager = new JsonFileManager(FileNames.TESTING_SUBSCRIBERS);
 
 describe('GET /rate', () => {
     const rateEndpoint = `/api${ApiPaths.GET_RATE}`;
@@ -34,11 +36,11 @@ describe('POST /subscribe', () => {
     const incorrectEmail = 'incorrect-email';
 
     beforeEach(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
+        fileManager.deleteFile();
     });
 
     afterAll(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
+        fileManager.deleteFile();
     });
 
     it('should return 200 status code if correct and unique email is sent', async () => {
@@ -50,7 +52,7 @@ describe('POST /subscribe', () => {
     });
 
     it('should return 409 status code if email already exists', async () => {
-        subscriptionsManager.addSubscriber(correctEmail);
+        fileManager.addLine(correctEmail);
 
         await expectationFromSubscribing(correctEmail, HttpStatusCodes.CONFLICT);
     });
@@ -80,14 +82,14 @@ describe('POST /sendEmails', () => {
             'no_reply0909@example.com.ua'
         ];
         for (const email of testingEmails) {
-            const successfullySent = subscriptionsManager.addSubscriber(email);
+            const successfullySubscribed = fileManager.addLine(email);
 
-            console.log((successfullySent ? 'Successfully subscribed ' : 'Failed to subscribe ') + email);
+            console.log((successfullySubscribed ? 'Successfully subscribed ' : 'Failed to subscribe ') + email);
         }
     });
 
     afterAll(() => {
-        subscriptionsManager.deleteFileWithSubscribers(FileNames.TESTING_SUBSCRIBERS);
+        fileManager.deleteFile();
     });
 
     it ('should response with status code 200 when emails are sent', async() => {

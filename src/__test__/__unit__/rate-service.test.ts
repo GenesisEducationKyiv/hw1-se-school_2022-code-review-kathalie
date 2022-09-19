@@ -1,10 +1,11 @@
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 
-import {getRate} from '../../services/api/rate-service.js'
-import {rateServiceForTesting} from "../../services/api/rate-service.js";
+import { RateService } from '../../services/api/rate-service.js'
 
 describe('When getRate function is called', () => {
-    const fetchUrl = rateServiceForTesting.url;
+    const rateService = new RateService();
+    const rateServicePrototype = Object.getPrototypeOf(rateService);
+    const fetchUrl = rateServicePrototype.apiUrl;
 
     beforeEach(async () => {
         jest.unstable_mockModule('node-fetch', () => ({
@@ -61,7 +62,7 @@ describe('When getRate function is called', () => {
 
         let actualRate;
         try {
-            actualRate = await getRate();
+            actualRate = await new RateService().getRate();
         } catch (_) {}
 
         expect(actualRate).toEqual(result);

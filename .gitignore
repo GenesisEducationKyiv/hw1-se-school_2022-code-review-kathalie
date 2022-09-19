@@ -5,3 +5,4 @@ test.json
 *.iml
 *.log
 *.env
+built/
