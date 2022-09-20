@@ -1,18 +1,15 @@
 import { HttpStatusCodes } from '../constants/http-status-codes.js';
-import { FileNames } from "../constants/file-names";
 
 import { UserEmailAlreadyExistsError } from "../exceptions/email-exists-error.js";
 import { InvalidEmailError } from "../exceptions/invalid-email-error.js";
-import { EmailRepository } from "../repositories/email-repository";
-import { JsonFileManager } from '../file-managers/json-file-manager.js';
 import { EmailService } from "../services/api/email-service.js";
-import { Email } from "../email";
+import { Email } from "../models/email";
 
-class EmailController {
+export class EmailController {
     private emailService: EmailService;
 
-    constructor() {
-        this.emailService = new EmailService(new EmailRepository(new JsonFileManager(FileNames.SUBSCRIBERS)));
+    constructor(emailService: EmailService) {
+        this.emailService = emailService;
     }
 
     public async subscribeEmail(req, res) {
@@ -44,5 +41,3 @@ class EmailController {
         }
     }
 }
-
-export default new EmailController();

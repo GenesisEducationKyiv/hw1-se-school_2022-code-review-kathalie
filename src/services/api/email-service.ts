@@ -4,7 +4,7 @@ import { Placeholders } from "../../constants/placeholders.js";
 import { Env } from "../../constants/env.js";
 import { RateService } from './rate-service.js';
 import { UserEmailAlreadyExistsError } from "../../exceptions/email-exists-error.js";
-import { Email } from "../../email";
+import { Email } from "../../models/email";
 
 export interface IEmailRepository {
     getAll(): string[];
@@ -16,9 +16,11 @@ export interface IEmailRepository {
 
 export class EmailService {
     emailRepository: IEmailRepository;
+    rateService: RateService;
 
-    constructor(subscriptionRepository: IEmailRepository){
+    constructor(subscriptionRepository: IEmailRepository, rateService: RateService){
         this.emailRepository = subscriptionRepository;
+        this.rateService = rateService;
     }
 
     public async subscribeEmail(email: Email) {
@@ -53,7 +55,7 @@ export class EmailService {
 
     public async sendEmails() {
         const subscribers = this.emailRepository.getAll();
-        const currentRate = await new RateService().getRate();
+        const currentRate = await this.rateService.getRate();
 
         const preparedEmailText = Env.TEXT.replace(Placeholders.CURRENT_RATE_PLACEHOLDER, currentRate);
 

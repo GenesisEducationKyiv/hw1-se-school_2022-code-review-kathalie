@@ -1,11 +1,11 @@
 import { HttpStatusCodes } from '../constants/http-status-codes.js';
 import { RateService } from "../services/api/rate-service.js";
 
-class RateController {
+export class RateController {
     private rateService: RateService;
 
-    constructor() {
-        this.rateService = new RateService();
+    constructor(rateService: RateService) {
+        this.rateService = rateService;
     }
 
     public async getRate(_req, res) {
@@ -18,6 +18,3 @@ class RateController {
         }
     }
 }
-
-
-export default new RateController();
