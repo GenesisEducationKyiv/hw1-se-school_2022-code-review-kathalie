@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 import {ApiPaths} from "../../constants/api-paths.js";
 import request from "supertest";
 import {app} from "../../index.js";
@@ -16,7 +18,7 @@ describe('GET /rate', () => {
 
         const statusCode = response.statusCode;
 
-        expect(statusCode).toBe(HttpStatusCodes.OK);
+        expect(statusCode.toString()).to.be(HttpStatusCodes.OK.toString());
     });
 
     it('should return a number value of actual BTC to UAH rate', async () => {
@@ -25,7 +27,7 @@ describe('GET /rate', () => {
         const exchangeRate = parseFloat(response.text);
         const exchangeRateIsANumber = !isNaN(exchangeRate) && typeof exchangeRate === 'number';
 
-        expect(exchangeRateIsANumber).toBeTruthy();
+        expect(exchangeRateIsANumber).to.be.true;
     });
 });
 
@@ -66,13 +68,13 @@ describe('POST /subscribe', () => {
             .post(subscribeEndpoint)
             .send(requestBody);
 
-        expect(response.statusCode).toBe(expectedStatusCode);
+        expect(response.statusCode).to.be(expectedStatusCode);
     }
 });
 
 
 describe('POST /sendEmails', () => {
-    jest.setTimeout(20000);
+    //jest.setTimeout(20000);
 
     const sendEmailsEndpoint = `/api${ApiPaths.SEND_EMAILS}`;
 
@@ -97,6 +99,6 @@ describe('POST /sendEmails', () => {
             .post(sendEmailsEndpoint)
             .send();
 
-        expect(response.statusCode).to.be(HttpStatusCodes.OK);
+        expect(response.statusCode.toString()).to.be(HttpStatusCodes.OK.toString());
     });
 });

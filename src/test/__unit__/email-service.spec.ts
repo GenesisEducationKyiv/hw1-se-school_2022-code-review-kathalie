@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 import { EmailService } from '../../services/api/email-service.js';
 import { EmailRepository } from "../../repositories/email-repository.js";
 import { JsonFileManager } from "../../file-managers/json-file-manager.js";
@@ -29,7 +31,7 @@ describe('Testing functions for emails validation', () => {
         }
 
         for (const key in invalidEmails) {
-            expect(resultsOfValidation[key]).toBeFalsy();
+            expect(resultsOfValidation[key]).to.be.false;
         }
     });
 
@@ -48,7 +50,7 @@ describe('Testing functions for emails validation', () => {
         }
 
         for (const key in validEmails) {
-            expect(resultsOfValidation[key]).toBeTruthy();
+            expect(resultsOfValidation[key]).to.be.true;
         }
     });
 });
