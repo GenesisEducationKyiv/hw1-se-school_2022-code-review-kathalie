@@ -2,7 +2,7 @@ import {ApiPaths} from "../../constants/api-paths.js";
 import request from "supertest";
 import {app} from "../../index.js";
 import {HttpStatusCodes} from "../../constants/http-status-codes.js";
-import {jest} from "@jest/globals";
+// import {jest} from "@jest/globals";
 import {JsonFileManager} from "../../file-managers/json-file-manager.js";
 import {FileNames} from "../../constants/file-names.js";
 
@@ -97,6 +97,6 @@ describe('POST /sendEmails', () => {
             .post(sendEmailsEndpoint)
             .send();
 
-        expect(response.statusCode).toBe(HttpStatusCodes.OK);
+        expect(response.statusCode).to.be(HttpStatusCodes.OK);
     });
 });
