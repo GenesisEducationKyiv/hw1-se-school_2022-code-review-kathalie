@@ -1,16 +1,16 @@
 {
   "name": "hw1-se-school_2022-code-review-kathalie",
   "version": "1.0.0",
-  "description": "",
+  "description": "Genesis Software Engineering School",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "start": "ts-node --esm ./src/index.ts",
+    "dev": "nodemon -x ts-node --esm ./src/index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kathalie",
   "license": "ISC",
   "dependencies": {
     "@jest/globals": "^29.0.2",
@@ -23,7 +23,9 @@
     "nodemon": "^2.0.19",
     "request-promise": "^4.2.6",
     "source-map-loader": "^4.0.0",
-    "supertest": "^6.2.4"
+    "supertest": "^6.2.4",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -31,7 +33,6 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/lodash": "^4.14.185",
-    "axios": "^0.27.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^29.0.3",
     "jest": "^29.0.2",

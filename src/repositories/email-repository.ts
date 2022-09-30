@@ -1,5 +1,5 @@
-import { IEmailRepository } from "../services/api/email-service";
-import {Email} from "../models/email";
+import { IEmailRepository } from "../services/api/email-service.js";
+import {Email} from "../models/email.js";
 
 export interface IFileManager {
     getContent(): string[];

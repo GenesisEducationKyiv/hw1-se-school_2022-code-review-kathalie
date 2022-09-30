@@ -8,7 +8,7 @@ export class RateService {
 
     public async getRate() {
         try {
-            const rateResponse = await this.getResponseFromOuterAPI(this.apiUrl);
+            const rateResponse = await RateService.getResponseFromOuterAPI(this.apiUrl);
             const jsonRateResponse = await rateResponse.json();
             const uahRate = jsonRateResponse[this.currencyFrom][this.currencyTo];
 
@@ -20,7 +20,7 @@ export class RateService {
         }
     }
 
-    private async getResponseFromOuterAPI(url) {
+    private static async getResponseFromOuterAPI(url) {
         const fetch = await import('node-fetch');
 
         return await fetch.default(url);

@@ -4,7 +4,7 @@ import { Placeholders } from "../../constants/placeholders.js";
 import { Env } from "../../constants/env.js";
 import { RateService } from './rate-service.js';
 import { UserEmailAlreadyExistsError } from "../../exceptions/email-exists-error.js";
-import { Email } from "../../models/email";
+import { Email } from "../../models/email.js";
 
 export interface IEmailRepository {
     getAll(): string[];

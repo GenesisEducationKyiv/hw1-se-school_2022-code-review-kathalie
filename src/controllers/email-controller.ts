@@ -3,7 +3,7 @@ import { HttpStatusCodes } from '../constants/http-status-codes.js';
 import { UserEmailAlreadyExistsError } from "../exceptions/email-exists-error.js";
 import { InvalidEmailError } from "../exceptions/invalid-email-error.js";
 import { EmailService } from "../services/api/email-service.js";
-import { Email } from "../models/email";
+import { Email } from "../models/email.js";
 
 export class EmailController {
     private emailService: EmailService;

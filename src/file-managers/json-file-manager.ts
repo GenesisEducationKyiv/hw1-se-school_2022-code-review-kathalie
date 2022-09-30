@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 
-import { Deletable } from "../interfaces/deletable.interface";
-import { IFileManager } from "../repositories/email-repository";
+import { IFileManager } from "../repositories/email-repository.js";
 
-export class JsonFileManager implements IFileManager, Deletable{
+export class JsonFileManager implements IFileManager{
     fileName: string;
 
     constructor(fileName: string) {
