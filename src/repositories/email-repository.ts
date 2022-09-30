@@ -18,8 +18,8 @@ export class EmailRepository implements IEmailRepository{
         return this.fileManager.getContent();
     }
 
-    save(email: Email) {
-        this.fileManager.addLine(email.address);
+    save(email: Email): boolean {
+        return this.fileManager.addLine(email.address);
     }
 
     isExists(email: Email): boolean {

@@ -9,7 +9,7 @@ import { Email } from "../../models/email.js";
 export interface IEmailRepository {
     getAll(): string[];
 
-    save(email: Email);
+    save(email: Email): boolean;
 
     isExists(email: Email): boolean;
 }
@@ -29,7 +29,8 @@ export class EmailService {
 
         const emailSuccessfullySubscribed = this.emailRepository.save(email);
 
-        console.log(emailSuccessfullySubscribed ? `${email} successfully subscribed.` : `Failed to subscribe ${email}`);
+        const emailAddress = email.address;
+        console.log(emailSuccessfullySubscribed ? `${emailAddress} successfully subscribed.` : `Failed to subscribe ${emailAddress}`);
     }
 
     private static getTransporter() {
