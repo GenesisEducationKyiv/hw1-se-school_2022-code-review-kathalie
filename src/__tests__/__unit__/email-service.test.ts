@@ -1,7 +1,12 @@
-import {emailServiceForTesting} from '../../services/api/email-service.js';
+import { EmailService } from '../../services/api/email-service.js';
+import { EmailRepository } from "../../repositories/email-repository.js";
+import { JsonFileManager } from "../../file-managers/json-file-manager.js";
+import { FileNames } from "../../constants/file-names.js";
 
 describe('Testing functions for emails validation', () => {
-    const validate = emailServiceForTesting.isEmailValid;
+    const emailService = new EmailService(new EmailRepository(new JsonFileManager(FileNames.TESTING_SUBSCRIBERS)));
+    const emailServicePrototype = Object.getPrototypeOf(emailService);
+    const validate = emailServicePrototype.isEmailValid;
 
     it('should not pass invalid emails', () => {
         const invalidEmails = {
@@ -45,5 +50,5 @@ describe('Testing functions for emails validation', () => {
         for (const key in validEmails) {
             expect(resultsOfValidation[key]).toBeTruthy();
         }
-    })
+    });
 });
