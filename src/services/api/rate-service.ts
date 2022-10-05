@@ -1,16 +1,15 @@
-import {IRateProviderCreator} from '../rate-providers-factory.js'
-import {IRateProvider} from "../rate-providers.js";
+import {IRateChain} from "../rate-providers/rate-chain.js";
 
 export class RateService {
-    private rateProvider: IRateProvider;
+    private rateChain: IRateChain;
 
-    constructor(rateProvider: IRateProviderCreator) {
-        this.rateProvider = rateProvider.createRateProvider();
+    constructor(rateChain: IRateChain) {
+        this.rateChain = rateChain;
     }
 
     public async getRate() {
         try {
-            return this.rateProvider.getRate();
+            return this.rateChain.getRate();
         } catch (err) {
             console.log('Rate Service Error', err);
 
