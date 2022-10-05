@@ -8,8 +8,6 @@ import {
 import {RateProviderLogger} from "./loggers/rate-providers.logger.js";
 
 export interface IRateChain {
-    next: IRateChain;
-
     getRate(): any;
 
     setNext(next: IRateChain): void;
@@ -20,7 +18,7 @@ export interface IRateChain {
 }
 
 abstract class RateChain implements IRateChain {
-    next: IRateChain;
+    private next: IRateChain;
     rateProvider: IRateProvider;
 
     protected constructor(rateProvider: IRateProvider){

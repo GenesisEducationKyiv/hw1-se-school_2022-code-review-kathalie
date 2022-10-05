@@ -5,7 +5,7 @@ import {emailService, rateService} from "../app-config.js";
 let rate;
 const timeDelay = 1000 * 60 * 10; // 10 min in ms
 
-//setInterval(await automaticSending, timeDelay, emailService, rateService);
+setInterval(await automaticSending, timeDelay, emailService, rateService);
 
 async function automaticSending(emailService: EmailService, rateService: RateService) {
     const newRate = await rateService.getRate();
