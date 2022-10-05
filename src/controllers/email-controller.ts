@@ -7,7 +7,7 @@ import { Email } from "../models/email.js";
 
 export class EmailController {
     private emailService: EmailService;
-
+я
     constructor(emailService: EmailService) {
         this.emailService = emailService;
     }

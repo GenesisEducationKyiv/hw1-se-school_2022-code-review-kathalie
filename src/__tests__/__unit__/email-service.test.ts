@@ -1,10 +1,7 @@
-import { EmailService } from '../../services/api/email-service.js';
-import { EmailRepository } from "../../repositories/email-repository.js";
-import { JsonFileManager } from "../../file-managers/json-file-manager.js";
-import { FileNames } from "../../constants/file-names.js";
+import {emailService as configEmailService} from '../../app-config';
 
 describe('Testing functions for emails validation', () => {
-    const emailService = new EmailService(new EmailRepository(new JsonFileManager(FileNames.TESTING_SUBSCRIBERS)));
+    const emailService = configEmailService;
     const emailServicePrototype = Object.getPrototypeOf(emailService);
     const validate = emailServicePrototype.isEmailValid;
 

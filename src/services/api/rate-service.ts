@@ -1,28 +1,20 @@
-export class RateService {
-    private apiVersion = 1;
-    private date = 'latest';
-    private currencyFrom = 'btc';
-    private currencyTo = 'uah';
+import {IRateProviderCreator} from '../rate-providers-factory.js'
+import {IRateProvider} from "../rate-providers.js";
 
-    private apiUrl = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@${this.apiVersion}/${this.date}/currencies/${this.currencyFrom}.json`;
+export class RateService {
+    private rateProvider: IRateProvider;
+
+    constructor(rateProvider: IRateProviderCreator) {
+        this.rateProvider = rateProvider.createRateProvider();
+    }
 
     public async getRate() {
         try {
-            const rateResponse = await RateService.getResponseFromOuterAPI(this.apiUrl);
-            const jsonRateResponse = await rateResponse.json();
-            const uahRate = jsonRateResponse[this.currencyFrom][this.currencyTo];
-
-            return uahRate;
+            return this.rateProvider.getRate();
         } catch (err) {
             console.log('Rate Service Error', err);
 
             throw err;
         }
-    }
-
-    private static async getResponseFromOuterAPI(url) {
-        const fetch = await import('node-fetch');
-
-        return await fetch.default(url);
     }
 }
