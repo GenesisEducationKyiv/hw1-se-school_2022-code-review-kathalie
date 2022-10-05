@@ -11,7 +11,7 @@ export class RateService {
         try {
             return this.rateChain.getRate();
         } catch (err) {
-            console.log('Rate Service Error', err);
+            console.log(`Rate Service Error: + ${err}`);
 
             throw err;
         }

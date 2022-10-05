@@ -4,7 +4,7 @@ import {
     CoinCapChainCreator, CoinGeckoChainCreator,
     CryptoCompareChainCreator, FawazahmedRateChainCreator,
     IRateChainCreator
-} from "./services/rate-providers/rate-chains-factory.js";
+} from "./services/rate-providers/rate-chain-factory.js";
 
 
 process.env.CRYPTO_CURRENCY_PROVIDER = RateProviders.CRYPTO_COMPARE;

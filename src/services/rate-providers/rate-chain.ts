@@ -5,7 +5,7 @@ import {
     FawazahmedProvider,
     IRateProvider
 } from "./rate-providers.js";
-import {RateProviders} from "../../constants/rate-providers.js";
+import {RateProviderLogger} from "./loggers/rate-providers.logger.js";
 
 export interface IRateChain {
     next: IRateChain;
@@ -21,29 +21,32 @@ export interface IRateChain {
 
 abstract class RateChain implements IRateChain {
     next: IRateChain;
+    rateProvider: IRateProvider;
 
-    abstract getRate();
+    protected constructor(rateProvider: IRateProvider){
+        this.rateProvider = rateProvider;
+    }
 
-    abstract getRateProviderName();
+    async getRate(){
+        let rate;
 
-    async handleChainErrors(rateProvider: IRateProvider) {
-        {
-            let rate;
+        try {
+            rate = await this.rateProvider.getRate();
+        } catch (err) {
+            if (!this.next) {
+                console.log('No available rate providers left :(');
 
-            try {
-                rate = await rateProvider.getRate();
-            } catch (err) {
-                if (!this.next) {
-                    console.log('No available rate providers left :(');
-
-                    return null;
-                }
-
-                rate = await this.next.getRate();
+                return null;
             }
 
-            return rate;
+            rate = await this.next.getRate();
         }
+
+        return rate;
+    }
+
+    getRateProviderName() {
+        return this.rateProvider.getName();
     }
 
     setNext(next: IRateChain) {
@@ -56,42 +59,26 @@ abstract class RateChain implements IRateChain {
 }
 
 export class CryptoCompareChain extends RateChain {
-    async getRate(){
-        return await super.handleChainErrors(new CryptoCompareProvider());
-    }
-
-    getRateProviderName() {
-        return RateProviders.CRYPTO_COMPARE;
+    constructor() {
+        super(new RateProviderLogger(new CryptoCompareProvider()));
     }
 }
 
 export class CoinCapChain extends RateChain {
-    async getRate(){
-        return await super.handleChainErrors(new CoinCapProvider());
-    }
-
-    getRateProviderName() {
-        return RateProviders.COIN_CAP;
+    constructor() {
+        super(new RateProviderLogger(new CoinCapProvider()));
     }
 }
 
 export class CoinGeckoChain extends RateChain {
-    async getRate(){
-        return await super.handleChainErrors(new CoinGeckoProvider()); //
-    }
-
-    getRateProviderName() {
-        return RateProviders.COIN_GECKO;
+    constructor() {
+        super(new RateProviderLogger(new CoinGeckoProvider()));
     }
 }
 
 export class FawazahmedChain extends RateChain {
-    async getRate(){
-        return await super.handleChainErrors(new FawazahmedProvider());
-    }
-
-    getRateProviderName() {
-        return RateProviders.FAWAZAHMED;
+    constructor() {
+        super(new RateProviderLogger(new FawazahmedProvider()));
     }
 }
 
