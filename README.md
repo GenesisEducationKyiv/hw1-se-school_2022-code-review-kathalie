@@ -36,3 +36,6 @@ __Other options:__
 ## Additional features
 ### Automatic sending
 Once an hour the API checks current exchange rate state and send emails containing the updated value to all the subscribers if the rate has changed since the last fetch.
+
+## Architecture
+![DDD Structure](./img/DDD_structure.jpg)

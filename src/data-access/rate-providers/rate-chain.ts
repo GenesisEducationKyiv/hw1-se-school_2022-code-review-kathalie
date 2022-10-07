@@ -6,16 +6,7 @@ import {
     IRateProvider
 } from "./rate-providers.js";
 import {RateProviderLogger} from "./loggers/rate-providers.logger.js";
-
-export interface IRateChain {
-    getRate(): any;
-
-    setNext(next: IRateChain): void;
-
-    getRateProviderName(): string;
-
-    equals(rateChain: IRateChain): boolean;
-}
+import {IRateChain} from "../../services/api/rate-service.js";
 
 abstract class RateChain implements IRateChain {
     private next: IRateChain;

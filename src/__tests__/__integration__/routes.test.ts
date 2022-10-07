@@ -1,10 +1,10 @@
-import {ApiPaths} from "../../constants/api-paths";
+import {ApiPaths} from "../../common/constants/api-paths";
 import request from "supertest";
 import {app} from "../../index";
-import {HttpStatusCodes} from "../../constants/http-status-codes";
+import {HttpStatusCodes} from "../../common/constants/http-status-codes";
 import {jest} from "@jest/globals";
-import {JsonFileManager} from "../../file-managers/json-file-manager";
-import {FileNames} from "../../constants/file-names";
+import {JsonFileManager} from "../../data-access/file-managers/json-file-manager";
+import {FileNames} from "../../common/constants/file-names";
 
 const fileManager = new JsonFileManager(FileNames.TESTING_SUBSCRIBERS);
 

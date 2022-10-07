@@ -14,7 +14,7 @@ async function automaticSending(emailService: EmailService, rateService: RateSer
 
     rate = newRate;
     try {
-        await emailService.sendEmails();
+        await emailService.sendRateToSubscribers();
     } catch (ignored) {
     }
 }
