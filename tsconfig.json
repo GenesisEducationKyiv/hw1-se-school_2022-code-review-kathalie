@@ -7,7 +7,9 @@
     "target": "esnext",
     "watch": true
   },
-  "include": ["./src/**/*", "./src/index.ts"],
+  "include": ["./src/**/*",
+    "./services/rate-service/src/index.ts"
+  ],
   "exclude": ["node_modules"],
   "esModuleInterop": true
 }
