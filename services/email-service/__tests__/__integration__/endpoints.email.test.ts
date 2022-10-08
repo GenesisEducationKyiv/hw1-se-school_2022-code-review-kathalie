@@ -1,10 +1,10 @@
 import {jest} from "@jest/globals";
 import request from "supertest";
 
-import {app} from "../../../rate-service/src";
+import {app} from "../../src/app.email";
 import {HttpStatusCodes} from "../../../common/constants/http-status-codes.js";
 import {FileNamesEmail} from "../../src/common/constants/file-names.email.js";
-import {ApiPaths} from "../../src/common/constants/api-paths.email.js";
+import {ApiPaths} from "../../../common/constants/api-paths.js";
 import {JsonFileManager} from "../../src/data-access/json-file-manager.js";
 
 const fileManager = new JsonFileManager(FileNamesEmail.TESTING_SUBSCRIBERS);

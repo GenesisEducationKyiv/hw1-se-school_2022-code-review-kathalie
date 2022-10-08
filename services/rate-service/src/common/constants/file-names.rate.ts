@@ -1,3 +1,3 @@
-export const FileNames = {
+export const FileNamesRate = {
     RATE_LOGGER: 'rate-providers.log'
 }

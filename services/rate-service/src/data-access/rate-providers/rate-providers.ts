@@ -1,7 +1,7 @@
-import {RateServiceConfigs} from '../../common/constants/rate-service-configs.js';
 import {RateProviders} from "../../common/constants/rate-providers.js";
 import { JsonParser } from '../json-parser.js';
 import {Rate} from "../../models/rate.js";
+import {RateServiceConfigs} from "../../common/constants/rate-service-configs.js";
 
 const currencyFrom = RateServiceConfigs.CURRENCY_FROM;
 const currencyTo = RateServiceConfigs.CURRENCY_TO;

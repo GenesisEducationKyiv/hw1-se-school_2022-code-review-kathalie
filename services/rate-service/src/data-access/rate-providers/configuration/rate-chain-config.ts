@@ -1,11 +1,11 @@
-import {RateProviders} from "./src/common/constants/rate-providers.js";
-import {getAllChains} from "./src/data-access/rate-providers/rate-chain.js";
+import {RateProviders} from "../../../common/constants/rate-providers.js";
+import {getAllChains} from "../rate-chain.js";
 import {
     CoinCapChainCreator, CoinGeckoChainCreator,
     CryptoCompareChainCreator, FawazahmedRateChainCreator,
     IRateChainCreator
-} from "./src/data-access/rate-providers/rate-chain-factory.js";
-import {IRateChain} from "./src/services/rate-service.js";
+} from "../rate-chain-factory.js";
+import {IRateChain} from "../../../services/rate-service.js";
 
 
 process.env.CRYPTO_CURRENCY_PROVIDER = RateProviders.CRYPTO_COMPARE;

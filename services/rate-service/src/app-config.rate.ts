@@ -1,5 +1,5 @@
 import {RateRounder} from "./presenters/rate-presenter.js";
-import {getRateChain} from "../chain-config.js";
+import {getRateChain} from "./data-access/rate-providers/configuration/rate-chain-config.js";
 import {RateService} from "./services/rate-service.js";
 import {RateCache} from "./services/cache/rate-cache.js";
 import {RateController} from "./controllers/rate-controller.js";

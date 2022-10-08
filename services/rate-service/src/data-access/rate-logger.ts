@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { FileNamesEmail } from "../../../email-service/src/common/constants/file-names.email.js";
+import {FileNamesRate} from "../common/constants/file-names.rate.js";
 
-export const rateLogger = fs.createWriteStream(FileNamesEmail.RATE_LOGGER, {
+export const rateLogger = fs.createWriteStream(FileNamesRate.RATE_LOGGER, {
     flags: 'a',
 })

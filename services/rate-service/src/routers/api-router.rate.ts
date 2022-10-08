@@ -1,5 +1,5 @@
 import Router from 'express';
-import {ApiPaths} from "../common/constants/api-paths.rate";
+import {ApiPaths} from "../../../common/constants/api-paths";
 import {rateController} from "../app-config.rate";
 
 const apiRouter = new Router();

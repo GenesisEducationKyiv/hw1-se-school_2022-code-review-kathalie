@@ -2,12 +2,12 @@
   "name": "hw1-se-school_2022-code-review-kathalie",
   "version": "1.0.0",
   "description": "Genesis Software Engineering School",
-  "main": "services/rate-service/src/index.ts",
+  "main": "services/rate-service/src/app.rate.ts",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "ts-node --esm services/rate-service/src/index.ts",
-    "dev": "nodemon -x ts-node --esm services/rate-service/src/index.ts"
+    "start": "ts-node --esm services/rate-service/src/app.rate.ts",
+    "dev": "nodemon -x ts-node --esm services/rate-service/src/app.rate.ts"
   },
   "keywords": [],
   "author": "Kathalie",

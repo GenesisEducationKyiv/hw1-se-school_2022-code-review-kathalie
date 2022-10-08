@@ -1,8 +1,8 @@
 import { Placeholders } from "../common/constants/placeholders.js";
-import { Env } from "../common/constants/env.js";
-import { RateService } from '../../../rate-service/src/services/rate-service.js';
+import { EnvEmail } from "../common/constants/env.email.js";
 import { UserEmailAlreadyExistsError } from "../common/exceptions/email-exists-error.js";
 import { Email } from "../models/email.js";
+import {RateFetcher} from "./rate-fetcher.js";
 
 export interface IEmailRepository {
     getAll(): string[];
@@ -19,12 +19,10 @@ export interface IMailer {
 export class EmailService {
     emailRepository: IEmailRepository;
     mailer: IMailer;
-    rateService: RateService;
 
-    constructor(subscriptionRepository: IEmailRepository, mailer: IMailer, rateService: RateService){
+    constructor(subscriptionRepository: IEmailRepository, mailer: IMailer){
         this.emailRepository = subscriptionRepository;
         this.mailer = mailer;
-        this.rateService = rateService;
     }
 
     public async subscribe(email: Email) {
@@ -39,12 +37,20 @@ export class EmailService {
 
     public async sendRateToSubscribers() {
         const subscribers = this.emailRepository.getAll();
-        const currentRate = await this.rateService.getRate();
+        let currentRate;
 
-        const preparedEmailText = Env.TEXT.replace(Placeholders.CURRENT_RATE_PLACEHOLDER, currentRate);
+        try {
+            currentRate = await RateFetcher.getRate();
+        } catch (err) {
+            console.log(`Failed to send emails: ${err}`);
+
+            throw err;
+        }
+
+        const preparedEmailText = EnvEmail.TEXT.replace(Placeholders.CURRENT_RATE_PLACEHOLDER, currentRate);
 
         for (let subscriber of subscribers) {
-            await this.mailer.sendEmail(Env.SENDER_EMAIL, subscriber, Env.SUBJECT, preparedEmailText)
+            await this.mailer.sendEmail(EnvEmail.SENDER_EMAIL, subscriber, EnvEmail.SUBJECT, preparedEmailText)
                 .catch(err => console.log(err));
         }
     }

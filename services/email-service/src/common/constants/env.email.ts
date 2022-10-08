@@ -1,6 +1,6 @@
 import {Placeholders} from "./placeholders.js";
 
-export const Env = {
+export const EnvEmail = {
     SUBJECT: process.env.EMAIL_SUBJECT || 'Поточний курс біткоїна в гривні',
     TEXT: process.env.EMAIL_TEXT || `1 BTC = ${Placeholders.CURRENT_RATE_PLACEHOLDER} UAH`,
     SERVICE: process.env.EMAIL_SERVICE || 'gmail',

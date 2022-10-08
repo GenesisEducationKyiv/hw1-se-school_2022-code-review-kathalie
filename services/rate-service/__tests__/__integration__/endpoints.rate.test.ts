@@ -1,8 +1,8 @@
 import request from "supertest";
 
-import {app} from "../../src";
-import {ApiPaths} from "../../src/common/constants/api-paths.rate";
-import {HttpStatusCodes} from "../../../common/constants/http-status-codes";
+import {app} from "../../src/app.rate.js";
+import {ApiPaths} from "../../../common/constants/api-paths.js";
+import {HttpStatusCodes} from "../../../common/constants/http-status-codes.js";
 
 describe('GET /rate', () => {
     const rateEndpoint = `/api${ApiPaths.GET_RATE}`;

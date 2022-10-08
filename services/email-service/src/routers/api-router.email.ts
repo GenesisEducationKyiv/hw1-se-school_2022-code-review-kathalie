@@ -1,7 +1,7 @@
 import Router from 'express';
 
-import {ApiPaths} from "../../../rate-service/src/common/constants/api-paths.rate.js";
 import {emailController} from "../app-config.email.js";
+import {ApiPaths} from "../../../common/constants/api-paths.js";
 
 const apiRouter = new Router();
 

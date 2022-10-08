@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-import {Env} from "../../common/constants/env.js";
+import {EnvEmail} from "../../common/constants/env.email.js";
 import {IMailer} from "../../services/email-service.js";
 
 export class NodeMailer implements IMailer {
@@ -17,10 +17,10 @@ export class NodeMailer implements IMailer {
 
     private static getTransporter() {
         return nodemailer.createTransport({
-            service: Env.SERVICE,
+            service: EnvEmail.SERVICE,
             auth: {
-                user: Env.SENDER_EMAIL,
-                pass: Env.SENDER_PASSWORD,
+                user: EnvEmail.SENDER_EMAIL,
+                pass: EnvEmail.SENDER_PASSWORD,
             },
         });
     }
