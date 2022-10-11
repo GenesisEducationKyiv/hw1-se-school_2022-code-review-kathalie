@@ -1,4 +1,4 @@
-import { IRateChain } from "../rate-providers/rate-chain.js";
+import { IRateChain } from "../api/rate-service.js";
 
 export class RateCache implements IRateChain{
     private rateChain: IRateChain;

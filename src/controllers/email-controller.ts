@@ -1,13 +1,13 @@
-import { HttpStatusCodes } from '../constants/http-status-codes.js';
+import { HttpStatusCodes } from '../common/constants/http-status-codes.js';
 
-import { UserEmailAlreadyExistsError } from "../exceptions/email-exists-error.js";
-import { InvalidEmailError } from "../exceptions/invalid-email-error.js";
+import { UserEmailAlreadyExistsError } from "../common/exceptions/email-exists-error.js";
+import { InvalidEmailError } from "../common/exceptions/invalid-email-error.js";
 import { EmailService } from "../services/api/email-service.js";
 import { Email } from "../models/email.js";
 
 export class EmailController {
     private emailService: EmailService;
-я
+
     constructor(emailService: EmailService) {
         this.emailService = emailService;
     }
@@ -16,7 +16,7 @@ export class EmailController {
         try {
             let email = new Email(req.body.email);
 
-            await this.emailService.subscribeEmail(email);
+            await this.emailService.subscribe(email);
 
             res.status(HttpStatusCodes.OK).send();
         } catch (err) {
@@ -33,7 +33,7 @@ export class EmailController {
 
     public async sendEmails(_req, res) {
         try {
-            await this.emailService.sendEmails();
+            await this.emailService.sendRateToSubscribers();
 
             res.status(HttpStatusCodes.OK).send();
         } catch (err) {

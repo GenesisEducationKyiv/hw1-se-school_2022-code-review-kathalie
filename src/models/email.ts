@@ -1,4 +1,4 @@
-import { InvalidEmailError } from "../exceptions/invalid-email-error.js";
+import { InvalidEmailError } from "../common/exceptions/invalid-email-error.js";
 
 export class Email {
     address: string;

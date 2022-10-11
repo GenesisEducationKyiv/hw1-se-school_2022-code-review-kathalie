@@ -1,6 +1,6 @@
 import express from 'express';
 import apiRouter from "./routers/api-router.js";
-import { Ports } from "./constants/ports.js";
+import { Ports } from "./common/constants/ports.js";
 
 const app = express();
 

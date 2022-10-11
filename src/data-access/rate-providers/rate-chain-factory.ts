@@ -1,4 +1,5 @@
-import {CoinCapChain, CoinGeckoChain, CryptoCompareChain, FawazahmedChain, IRateChain} from "./rate-chain.js";
+import {CoinCapChain, CoinGeckoChain, CryptoCompareChain, FawazahmedChain} from "./rate-chain.js";
+import {IRateChain} from "../../services/api/rate-service.js";
 
 export interface IRateChainCreator {
     createRateChain(): IRateChain;

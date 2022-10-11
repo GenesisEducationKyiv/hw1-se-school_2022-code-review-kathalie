@@ -1,6 +1,7 @@
-import { InvalidRateError } from "../../../exceptions/invalid-rate-error.js";
+import { InvalidRateError } from "../../../common/exceptions/invalid-rate-error.js";
 import { IRateProvider } from "../rate-providers.js";
-import {rateLogger} from "../../../file-managers/rate-logger.js";
+import {rateLogger} from "../../file-managers/rate-logger.js";
+import {Rate} from "../../../models/rate.js";
 
 export class RateProviderLogger implements IRateProvider {
     rateProvider: IRateProvider;
@@ -10,7 +11,7 @@ export class RateProviderLogger implements IRateProvider {
     }
 
     async getRate() {
-        let rate;
+        let rate: Rate;
 
         try {
             rate = await this.rateProvider.getRate();
@@ -24,7 +25,7 @@ export class RateProviderLogger implements IRateProvider {
             rateLogger.write(this.formLogLine('failed'));
         }
 
-        rateLogger.write(this.formLogLine(`Response: ${rate}\n`));
+        rateLogger.write(this.formLogLine(`Response: ${rate.getValue()}\n`));
 
         return rate;
     }
