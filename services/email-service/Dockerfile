@@ -1,8 +1,8 @@
 # Defining from what image to build from
-FROM node:16.16.0
+FROM node:latest
 
 # Creating app directory
-WORKDIR /api
+WORKDIR /email-service
 
 # Installing all dependencies
 COPY package*.json ./
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Port
-EXPOSE 5000
+EXPOSE 3000
 
 # Command for running the app (node .)
-CMD ["node", "."]
+CMD ["npm", "start"]

@@ -1,5 +1,5 @@
 import {EmailService} from "./email-service.js";
-import {emailService} from "../app-config.email.js";
+import {emailService} from "../di.email.js";
 import {RateFetcher} from "./rate-fetcher.js";
 
 

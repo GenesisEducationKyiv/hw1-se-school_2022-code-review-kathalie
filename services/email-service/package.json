@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "ts-node --esm src/app.email.ts",
-    "dev": "nodemon -x ts-node --esm src/app.email.ts"
+    "start": "ts-node --esm app.email.ts",
+    "dev": "nodemon -x ts-node --esm app.email.ts"
   },
   "keywords": [],
   "author": "Kathalie",

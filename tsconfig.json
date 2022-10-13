@@ -8,7 +8,7 @@
     "watch": true
   },
   "include": ["./src/**/*",
-    "./services/rate-service/src/app.rate.ts"
+    "./services/rate-service/app.rate.ts"
   ],
   "exclude": ["node_modules"],
   "esModuleInterop": true

@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "ts-node --esm src/app.rate.ts",
-    "dev": "nodemon -x ts-node --esm src/app.rate.ts"
+    "start": "ts-node --esm app.rate.ts",
+    "dev": "nodemon -x ts-node --esm app.rate.ts"
   },
   "keywords": [],
   "author": "Kathalie",

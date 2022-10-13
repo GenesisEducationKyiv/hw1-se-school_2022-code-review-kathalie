@@ -1,6 +1,6 @@
 import request from "supertest";
 
-import {app} from "../../src/app.rate.js";
+import {app} from "../../app.rate.js";
 import {ApiPaths} from "../../../common/constants/api-paths.js";
 import {HttpStatusCodes} from "../../../common/constants/http-status-codes.js";
 
