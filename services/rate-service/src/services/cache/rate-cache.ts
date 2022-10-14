@@ -1,4 +1,7 @@
 import { IRateChain } from "../rate-service.js";
+import {rootRate} from "../../../../logging-service/src/di.logging.js";
+
+const log = rootRate.getChildCategory("Rate Cache");
 
 export class RateCache implements IRateChain{
     private rateChain: IRateChain;
@@ -10,6 +13,8 @@ export class RateCache implements IRateChain{
         this.rateChain = rateChain;
         this.timeOfCaching = 0;
         this.cachedRate = null;
+
+        log.debug(`Rate Cache instance has been created`);
     }
 
     getRate(): any {
@@ -19,6 +24,9 @@ export class RateCache implements IRateChain{
         if (cacheIsNotUpToDate || !this.cachedRate) {
             this.timeOfCaching = currentTime;
             this.cachedRate = this.rateChain.getRate();
+        }
+        else {
+            log.debug("Using cached vale of rate");
         }
 
         return this.cachedRate;

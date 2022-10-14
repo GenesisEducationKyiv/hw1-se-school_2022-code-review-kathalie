@@ -1,4 +1,7 @@
 import {Rate} from "../models/rate.js";
+import {rootRate} from "../../../logging-service/src/di.logging.js";
+
+const log = rootRate.getChildCategory("Service");
 
 export interface IRatePresenter {
     getPresentedRate(rate: Rate);
@@ -21,6 +24,8 @@ export class RateService {
     constructor(rateChain: IRateChain, ratePresenter: IRatePresenter) {
         this.rateChain = rateChain;
         this.ratePresenter = ratePresenter;
+
+        log.debug(`Rate Service instance has been created`);
     }
 
     public async getRate() {
@@ -28,9 +33,11 @@ export class RateService {
             const currentRate: Rate = await this.rateChain.getRate();
             const presentedRate = this.ratePresenter.getPresentedRate(currentRate);
 
+            log.debug(`Received rate: ${presentedRate}`);
+
             return presentedRate;
         } catch (err) {
-            console.log(`Rate Service Error: + ${err}`);
+            log.error(`Failed to get rate: ${err}`);
 
             throw err;
         }

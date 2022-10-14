@@ -2,6 +2,9 @@ import {RateProviders} from "../../common/constants/rate-providers.js";
 import { JsonParser } from '../json-parser.js';
 import {Rate} from "../../models/rate.js";
 import {RateServiceConfigs} from "../../common/constants/rate-service-configs.js";
+import {rootRate} from "../../../../logging-service/src/di.logging.js";
+
+const log = rootRate.getChildCategory("Rate Providers");
 
 const currencyFrom = RateServiceConfigs.CURRENCY_FROM;
 const currencyTo = RateServiceConfigs.CURRENCY_TO;
@@ -15,12 +18,15 @@ export interface IRateProvider {
 abstract class RateProvider implements IRateProvider {
     async getRate() {
         let rate: Rate;
+        let rateValue = await this.getRateValueFromProvider();
 
         try {
-            let rateValue = await this.getRateValueFromProvider();
-
             rate = new Rate(rateValue);
+
+            log.debug(`Successfully created Rate instance with rate value ${rateValue}`);
         } catch (err) {
+            log.debug(`Failed to create Rate instance with rate value ${rateValue}`);
+
             throw err;
         }
 

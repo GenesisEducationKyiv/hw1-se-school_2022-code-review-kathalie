@@ -2,6 +2,9 @@ import fetch from 'node-fetch';
 
 import {Ports} from "../../../common/constants/ports.js";
 import {ApiPaths} from "../../../common/constants/api-paths.js";
+import {rootEmail} from "../../../logging-service/src/di.logging.js";
+
+const log = rootEmail.getChildCategory("Rate Fetcher");
 
 export class RateFetcher {
     static async getRate() {
@@ -9,13 +12,17 @@ export class RateFetcher {
             const response = await fetch(`http://localhost:${Ports.RATE_SERVER_PORT}/api/${ApiPaths.GET_RATE}`);
 
             if (!response.ok) {
-                console.log(`Failed to get rate. ${response.status} status received.`);
-
-                throw new Error(`Error while getting price! status: ${response.status}`);
+                throw new Error(`Error while getting rate. Status: ${response.status}`);
             }
 
-            return await response.json();
+            const jsonResponse = await response.json();
+
+            log.debug(`Successfully fetched Rate Service and received rate: ${jsonResponse}`);
+
+            return jsonResponse;
         } catch (error) {
+            log.error(`Failed to get rate from Rate Service`);
+
             throw new Error(error as string)
         }
     }

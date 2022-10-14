@@ -1,5 +1,8 @@
 import { IEmailRepository } from "../../services/email-service.js";
 import {Email} from "../../models/email.js";
+import {rootEmail} from "../../../../logging-service/src/di.logging.js";
+
+const log = rootEmail.getChildCategory("Email Repository");
 
 export interface IFileManager {
     getContent(): string[];
@@ -12,6 +15,8 @@ export class EmailRepository implements IEmailRepository{
 
     constructor(fileManager: IFileManager) {
         this.fileManager = fileManager;
+
+        log.debug(`Email Repository instance has been created`);
     }
 
     getAll(): string[] {

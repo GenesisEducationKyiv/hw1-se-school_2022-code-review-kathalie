@@ -2,6 +2,9 @@ import nodemailer from 'nodemailer';
 
 import {EnvEmail} from "../../common/constants/env.email.js";
 import {IMailer} from "../../services/email-service.js";
+import {rootEmail} from "../../../../logging-service/src/di.logging.js";
+
+const log = rootEmail.getChildCategory("Node Mailer");
 
 export class NodeMailer implements IMailer {
     public async sendEmail(emailSender, emailReceiver, emailSubject, emailText) {
@@ -12,7 +15,7 @@ export class NodeMailer implements IMailer {
             text: emailText
         });
 
-        console.log(`Message sent: ${info.messageId} (sent to: ${emailReceiver})`);
+        log.debug(`Message sent: ${info.messageId} (sent to: ${emailReceiver})`);
     }
 
     private static getTransporter() {

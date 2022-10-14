@@ -1,4 +1,7 @@
 import {InvalidRateError} from "../common/exceptions/invalid-rate-error.js";
+import {rootRate} from "../../../logging-service/src/di.logging.js";
+
+const log = rootRate.getChildCategory("Model");
 
 export class Rate {
     readonly rateValue: number;
@@ -8,6 +11,8 @@ export class Rate {
             throw new InvalidRateError();
 
         this.rateValue = parseFloat(rateValue);
+
+        log.debug("Rate instance has been created");
     }
 
     public getValue(): number {
