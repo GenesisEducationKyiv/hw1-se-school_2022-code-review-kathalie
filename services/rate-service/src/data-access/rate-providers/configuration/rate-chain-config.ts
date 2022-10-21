@@ -6,7 +6,9 @@ import {
     IRateChainCreator
 } from "../rate-chain-factory.js";
 import {IRateChain} from "../../../services/rate-service.js";
+import {rootRate} from "../../../../../logging-service/src/di.logging.js";
 
+const log = rootRate.getChildCategory("Rate Chain Config");
 
 process.env.CRYPTO_CURRENCY_PROVIDER = RateProviders.CRYPTO_COMPARE;
 
@@ -39,8 +41,12 @@ function getChainsInRightOrder(): IRateChain[] {
 }
 
 function initRateProvidersChain(orderedChains: IRateChain[]) {
+    log.info(`Initializing Rate Chain:`);
+
     for (let i=0; i<orderedChains.length; i++) {
         orderedChains[i].setNext(orderedChains[i+1]);
+
+        log.info(`${i + 1} chain node: ${orderedChains[i].getRateProviderName()}`);
     }
 }
 

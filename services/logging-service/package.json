@@ -5,9 +5,7 @@
   "main": "services/rate-service/src/app.rate.ts",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "ts-node --esm app.email.ts",
-    "dev": "nodemon -x ts-node --esm app.email.ts"
+    "log": "ts-node --esm index.logging.ts"
   },
   "keywords": [],
   "author": "Kathalie",

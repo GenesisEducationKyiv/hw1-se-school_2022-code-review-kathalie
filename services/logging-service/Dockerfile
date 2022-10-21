@@ -1,8 +1,8 @@
 # Defining from what image to build from
-FROM node:16.16.0
+FROM node:latest
 
 # Creating app directory
-WORKDIR /api
+WORKDIR /logging-service
 
 # Installing all dependencies
 COPY package*.json ./
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000
 
 # Command for running the app (node .)
-CMD ["node", "."]
+CMD ["npm", "log"]

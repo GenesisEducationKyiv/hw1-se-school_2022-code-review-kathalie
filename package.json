@@ -2,18 +2,19 @@
   "name": "hw1-se-school_2022-code-review-kathalie",
   "version": "1.0.0",
   "description": "Genesis Software Engineering School",
-  "main": "services/rate-service/src/app.rate.ts",
+  "main": "services/rate-service/app.rate.ts",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "start": "ts-node --esm services/rate-service/src/app.rate.ts",
-    "dev": "nodemon -x ts-node --esm services/rate-service/src/app.rate.ts"
+    "start": "ts-node --esm services/rate-service/app.rate.ts",
+    "dev": "nodemon -x ts-node --esm services/rate-service/app.rate.ts"
   },
   "keywords": [],
   "author": "Kathalie",
   "license": "ISC",
   "dependencies": {
     "@jest/globals": "^29.0.2",
+    "amqplib": "^0.10.3",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
     "lodash": "^4.17.21",
@@ -24,12 +25,15 @@
     "source-map-loader": "^4.0.0",
     "supertest": "^6.2.4",
     "ts-loader": "^9.4.1",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.3",
+    "typescript-logging": "^2.0.2",
+    "typescript-logging-category-style": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
+    "@types/amqplib": "^0.8.2",
     "@types/jest": "^29.0.3",
     "@types/lodash": "^4.14.185",
     "babel-core": "^7.0.0-bridge.0",

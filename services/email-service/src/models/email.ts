@@ -1,4 +1,7 @@
 import { InvalidEmailError } from "../common/exceptions/invalid-email-error.js";
+import {rootEmail} from "../../../logging-service/src/di.logging.js";
+
+const log = rootEmail.getChildCategory("Model");
 
 export class Email {
     address: string;
@@ -8,6 +11,8 @@ export class Email {
             throw new InvalidEmailError();
 
         this.address = emailAddress;
+
+        log.debug(`Email instance has been created`);
     }
 
     private static isValid(emailAddress: string) {

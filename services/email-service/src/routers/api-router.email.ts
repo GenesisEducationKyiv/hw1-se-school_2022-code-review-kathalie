@@ -1,6 +1,6 @@
 import Router from 'express';
 
-import {emailController} from "../app-config.email.js";
+import {emailController} from "../di.email.js";
 import {ApiPaths} from "../../../common/constants/api-paths.js";
 
 const apiRouter = new Router();

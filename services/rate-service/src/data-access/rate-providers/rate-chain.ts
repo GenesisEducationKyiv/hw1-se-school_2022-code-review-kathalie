@@ -7,6 +7,9 @@ import {
 } from "./rate-providers.js";
 import {RateProviderLogger} from "./loggers/rate-providers.logger.js";
 import {IRateChain} from "../../services/rate-service.js";
+import {rootRate} from "../../../../logging-service/src/di.logging.js";
+
+const log = rootRate.getChildCategory("Rate Chain");
 
 abstract class RateChain implements IRateChain {
     private next: IRateChain;
@@ -14,6 +17,8 @@ abstract class RateChain implements IRateChain {
 
     protected constructor(rateProvider: IRateProvider){
         this.rateProvider = rateProvider;
+
+        log.debug(`Rate Chain instance has been created`);
     }
 
     async getRate(){
@@ -23,10 +28,12 @@ abstract class RateChain implements IRateChain {
             rate = await this.rateProvider.getRate();
         } catch (err) {
             if (!this.next) {
-                console.log('No available rate providers left :(');
+                log.error(`No available rate providers left :(`);
 
                 return null;
             }
+
+            log.debug(`Switched to ${this.rateProvider}`);
 
             rate = await this.next.getRate();
         }

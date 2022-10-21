@@ -1,4 +1,4 @@
-import {emailService as configEmailService} from '../../src/app-config.email.js';
+import {emailService as configEmailService} from '../../src/di.email.js';
 
 describe('Testing functions for emails validation', () => {
     const emailService = configEmailService;
