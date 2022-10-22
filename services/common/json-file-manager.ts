@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
-import { IFileManager } from "./repositories/email-repository.js";
-import {rootEmail} from "../../../logging-service/src/di.logging.js";
+import { IFileManager } from "../email-service/src/data-access/repositories/email-repository.js";
+import {rootEmail} from "../logging-service/src/di.logging.js";
 
 const log = rootEmail.getChildCategory("Json File Manager");
 

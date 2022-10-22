@@ -2,7 +2,7 @@
 FROM node:latest
 
 # Creating app directory
-WORKDIR /email-service
+WORKDIR /customer-service
 
 # Installing all dependencies
 COPY package*.json ./
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Port
-EXPOSE 3000
+EXPOSE 8082
 
 # Command for running the app (node .)
 CMD ["npm", "start"]

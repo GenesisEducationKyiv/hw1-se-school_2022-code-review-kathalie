@@ -1,6 +1,9 @@
+import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { SagaModule } from 'nestjs-saga';
-import {SubscribeSaga} from "./email-service.saga";
+
+import {SubscribeSaga} from "./email-service.saga.js";
+import {CustomerController} from "../../../../customer-service/src/controllers/customer-controller.js"
 
 @Module({
     imports: [
@@ -9,5 +12,6 @@ import {SubscribeSaga} from "./email-service.saga";
             sagas: [SubscribeSaga], // required
         }),
     ],
+    controllers: [CustomerController]
 })
-class AppModule {}
+class CustomerModule {}

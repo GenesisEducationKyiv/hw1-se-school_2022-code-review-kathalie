@@ -1,9 +1,10 @@
 import { Builder, Saga } from 'nestjs-saga';
-import {Email} from "../models/email";
-import {EmailService} from "./email-service";
-import {customerController} from "../../../customer-service/src/di.customer.js";
 
-class SubscribeSagaCommand {
+import {Email} from "../../models/email.js";
+import {EmailService} from "../email-service.js";
+import {customerController} from "../../../../customer-service/src/di.customer.js";
+
+export class SubscribeSagaCommand {
     constructor(
         public email: Email,
     ) {}

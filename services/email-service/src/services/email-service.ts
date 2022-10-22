@@ -12,6 +12,8 @@ export interface IEmailRepository {
 
     save(email: Email): boolean;
 
+    remove(email: Email): boolean;
+
     isExists(email: Email): boolean;
 }
 
@@ -30,7 +32,7 @@ export class EmailService {
         log.debug(`Email Service instance has been created`);
     }
 
-    public async subscribe(email: Email) {
+    public subscribe(email: Email) {
         if (this.emailRepository.isExists(email))
             throw new UserEmailAlreadyExistsError();
 
@@ -39,6 +41,18 @@ export class EmailService {
         const emailAddress = email.address;
 
         log.debug(emailSuccessfullySubscribed ? `${emailAddress} successfully subscribed.` : `Failed to subscribe ${emailAddress}`);
+
+        return emailSuccessfullySubscribed;
+    }
+
+    public unsubscribe(email: Email) {
+        const emailSuccessfullyUnsubscribed = this.emailRepository.remove(email);
+
+        const emailAddress = email.address;
+
+        log.debug(emailSuccessfullyUnsubscribed ? `${emailAddress} successfully unsubscribed.` : `Failed to unsubscribe ${emailAddress}`);
+
+        return emailSuccessfullyUnsubscribed;
     }
 
     public async sendRateToSubscribers() {

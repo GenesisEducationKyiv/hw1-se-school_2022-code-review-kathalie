@@ -1,5 +1,5 @@
 module.exports = {
-    entry: "./src/app.email.ts",
+    entry: "./src/app.customer.ts",
     output: {
         filename: "./dist/bundle.js",
     },

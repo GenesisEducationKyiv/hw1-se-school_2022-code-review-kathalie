@@ -1,20 +1,18 @@
 import {Channel, Message} from "amqplib";
 
-import {RabbitMQConfigs} from "../constants/rabbitmq-configs.js";
+import {RabbitMQConfigs} from "../../logging-service/src/common/constants/rabbitmq-configs.js";
 import {RabbitMQ} from "./rabbitmq.js";
 
 export class RabbitMQConsumer {
-    rabbitmq: RabbitMQ;
 
-    constructor(rabbitmq: RabbitMQ) {
-        this.rabbitmq = rabbitmq;
-    }
+    constructor(private rabbitmq: RabbitMQ) {}
 
     async consume() {
         const channel: Channel = await this.rabbitmq.createChannel();
+        const queueName: string = this.rabbitmq.getQueueName();
 
         await channel.consume(
-            RabbitMQConfigs.QUEUE_NAME,
+            queueName,
             async (data: Message | null) => {
                 if (data) {
                     const msg = JSON.parse(data.content.toString());
