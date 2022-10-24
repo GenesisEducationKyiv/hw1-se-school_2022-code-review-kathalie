@@ -1,21 +1,20 @@
 import {Connection} from "amqplib";
 import * as amqp from "amqplib";
 
-import {RabbitMQConfigs} from "../constants/rabbitmq-configs.js";
-
 export class RabbitMQ {
-    host: string;
 
-    constructor(host: string) {
-        this.host = host;
+    constructor(private host: string, private queueName: string) {}
+
+    getQueueName() {
+        return this.queueName;
     }
 
     async createChannel() {
         try {
-            const connection: Connection = await amqp.connect(RabbitMQConfigs.HOST);
+            const connection: Connection = await amqp.connect(this.host);
 
             const channel = await connection.createChannel();
-            await channel.assertQueue(RabbitMQConfigs.QUEUE_NAME);
+            await channel.assertQueue(this.queueName);
 
             return channel;
         } catch(err) {

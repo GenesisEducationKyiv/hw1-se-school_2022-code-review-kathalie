@@ -5,7 +5,9 @@
     "outDir": "./built",
     "allowJs": true,
     "target": "esnext",
-    "watch": true
+    "watch": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["./src/**/*",
     "./services/rate-service/app.rate.ts"

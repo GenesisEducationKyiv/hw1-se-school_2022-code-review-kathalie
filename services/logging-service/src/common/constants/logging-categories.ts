@@ -1,4 +1,5 @@
 export const LoggingCategories = {
     EmailService: 'Email',
-    RateService: 'Rate'
+    RateService: 'Rate',
+    CustomerService: 'Customer',
 }

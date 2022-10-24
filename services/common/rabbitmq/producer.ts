@@ -1,20 +1,17 @@
 import {Channel} from "amqplib";
 
-import {RabbitMQConfigs} from "../constants/rabbitmq-configs.js";
+import {RabbitMQConfigs} from "../../logging-service/src/common/constants/rabbitmq-configs.js";
 import {RabbitMQ} from "./rabbitmq.js";
 
 export class RabbitMQProducer {
-    rabbitmq: RabbitMQ;
 
-    constructor(rabbitmq: RabbitMQ) {
-        this.rabbitmq = rabbitmq;
-    }
+    constructor(private rabbitmq: RabbitMQ) {}
 
     async produce(data) {
         const channel: Channel = await this.rabbitmq.createChannel();
 
         const msg = JSON.stringify(data);
 
-        channel.sendToQueue(RabbitMQConfigs.QUEUE_NAME, Buffer.from(msg));
+        channel.sendToQueue(this.rabbitmq.getQueueName(), Buffer.from(msg));
     }
 }

@@ -5,7 +5,7 @@
   "main": "services/rate-service/src/app.rate.ts",
   "type": "module",
   "scripts": {
-    "log": "ts-node --esm index.logging.ts"
+    "log": "ts-node --esm app.logging.ts"
   },
   "keywords": [],
   "author": "Kathalie",
