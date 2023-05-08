@@ -5,6 +5,7 @@ import {Ports} from "../common/constants/ports.js";
 import {rootRate} from "../logging-service/src/di.logging.js";
 
 const app = express();
+
 const log = rootRate.getChildCategory("App");
 
 app.use(express.urlencoded({extended: true}));

@@ -2,7 +2,7 @@
   "name": "hw1-se-school_2022-code-review-kathalie",
   "version": "1.0.0",
   "description": "Genesis Software Engineering School",
-  "main": "services/customer-service/src/app.customer.ts",
+  "main": "src/services/customer-service/src/app.customer.ts",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

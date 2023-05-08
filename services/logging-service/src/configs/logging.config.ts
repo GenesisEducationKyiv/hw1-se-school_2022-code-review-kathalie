@@ -1,13 +1,14 @@
-import {CategoryProvider, Category} from "typescript-logging-category-style";
+import {Category, CategoryProvider} from "typescript-logging-category-style";
 import {LogLevel, RawLogMessage} from "typescript-logging";
 
 import {loggingDispatcher} from "./event-dispatcher.config.js"
-import {LoggingEvent} from "../handlers/events";
+import {LoggingEvent} from "../handlers/events.js";
 
-const provider = await CategoryProvider.createProvider("LoggingToMessageBrokerProvider", {
+const provider = CategoryProvider.createProvider("LoggingToMessageBrokerProvider", {
+    level: LogLevel.Debug,
     channel: {
         type: "RawLogChannel",
-        write: async (msg, formatArg) => {
+        write: (msg: RawLogMessage, _) => {
             const formattedMessage = getFormattedLog(msg);
 
             loggingDispatcher.trigger(new LoggingEvent(formattedMessage, msg.level));
@@ -17,10 +18,9 @@ const provider = await CategoryProvider.createProvider("LoggingToMessageBrokerPr
 
 function getFormattedLog(msg: RawLogMessage) {
     const date = new Date(msg.timeInMillis);
-    const dateStr = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    const timeStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
+    const dateStr = date.toLocaleString();
 
-    return `${dateStr} ${timeStr} [${LogLevel[msg.level]}] ${msg.message}`;
+    return `${dateStr} [${LogLevel[msg.level]}] ${msg.message}`;
 }
 
 export function getLogger(name: string): Category {

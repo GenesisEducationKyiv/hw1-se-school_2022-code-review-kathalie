@@ -1,4 +1,3 @@
-import {Connection} from "amqplib";
 import * as amqp from "amqplib";
 
 export class RabbitMQ {
@@ -11,7 +10,7 @@ export class RabbitMQ {
 
     async createChannel() {
         try {
-            const connection: Connection = await amqp.connect(this.host);
+            const connection: amqp.Connection = await amqp.connect(this.host);
 
             const channel = await connection.createChannel();
             await channel.assertQueue(this.queueName);

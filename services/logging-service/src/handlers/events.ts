@@ -1,16 +1,16 @@
 import {LogLevel} from "typescript-logging";
 
-export enum EventNames {
-    LOGGING_EVENT
+export enum EventName {
+    LOGGING_EVENT = 'LoggingEvent'
 }
 
 export interface IEvent {
-    getName(): EventNames;
+    getName(): EventName;
     getData();
 }
 
 export class LoggingEvent implements IEvent{
-    static eventName: EventNames = EventNames.LOGGING_EVENT;
+    static eventName: EventName = EventName.LOGGING_EVENT;
 
     constructor(private message: string, private logLevel: LogLevel){}
 

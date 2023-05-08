@@ -1,25 +1,31 @@
 import {IListener} from "./listeners.js";
-import {EventNames, IEvent} from "./events.js";
+import {EventName, IEvent} from "./events.js";
 import {ListenerIsNotAttachedError} from "../common/exceptions/listener-is-not-attached.error.js";
 import {EventAlreadyAttachedError} from "../common/exceptions/event-already-attached.error.js";
 
 export interface IDispatcher {
-    attach(listener: IListener, event: EventNames);
+    attach(listener: IListener, event: EventName);
 
-    detach(listener: IListener, event: EventNames);
+    detach(listener: IListener, event: EventName);
 
     trigger(event: IEvent);
 }
 
 export class LoggerDispatcher implements IDispatcher {
-    events: Map<EventNames, Map<string, IListener>>;
+    events = {} as Record<EventName, Record<string, IListener>>;
 
-    private eventIsAttached(eventName: EventNames, listenerType: string): boolean  {
-        return this.events[eventName].getKey() === listenerType;
+    private eventIsAttached(eventName: EventName, listenerType: string): boolean  {
+        if (!this.events[eventName]) {
+            this.events[eventName] = {} as Record<string, IListener>;
+
+            return false;
+        }
+
+        return listenerType in this.events[eventName];
     }
 
-    attach(listener: IListener, eventName: EventNames) {
-        const listenerType: string = typeof listener;
+    attach(listener: IListener, eventName: EventName) {
+        const listenerType: string = listener.constructor.name;
 
         if (this.eventIsAttached(eventName, listenerType))
             throw new EventAlreadyAttachedError();
@@ -27,23 +33,23 @@ export class LoggerDispatcher implements IDispatcher {
         this.events[eventName][listenerType] = listener;
     }
 
-    detach(listener: IListener, eventName: EventNames) {
+    detach(listener: IListener, eventName: EventName) {
         const listenerType: string = typeof listener;
 
         if (!this.eventIsAttached(eventName, listenerType))
             throw new ListenerIsNotAttachedError();
 
-        this.events.get(eventName).delete(listenerType);
+        delete this.events[eventName][listenerType];
     }
 
     trigger(event: IEvent) {
         const eventName = event.getName();
 
-        if (!this.events.has(eventName))
+        if (!(eventName in this.events))
             throw new ListenerIsNotAttachedError();
 
-        for (let listenerType in this.events.get(eventName)) {
-            const listener: IListener = this.events.get(eventName).get(listenerType);
+        for (let listenerType in this.events[eventName]) {
+            const listener: IListener = this.events[eventName][listenerType];
 
             listener.listen(event);
         }

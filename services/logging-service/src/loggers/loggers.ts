@@ -20,7 +20,6 @@ export class LoggerIntoFile implements ILogger {
 
 
 export class LoggerIntoConsole implements ILogger {
-
     log(message: string) {
         console.log(message);
     }
@@ -28,7 +27,6 @@ export class LoggerIntoConsole implements ILogger {
 
 
 export class LoggerIntoRabbitmq implements ILogger {
-
     constructor(private producer: RabbitMQProducer) {}
 
     async log(message: string) {

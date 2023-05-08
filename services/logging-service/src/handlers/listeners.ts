@@ -12,40 +12,41 @@ export interface IListener {
 abstract class LogListener implements IListener {
     abstract listen(event: IEvent);
 
-    protected log(event: IEvent, preferredLogLevel: LogLevel, logger: ILogger) {
+    protected logEvent(event: IEvent, logLevels: LogLevel[], logger: ILogger) {
         const data = event.getData();
         const message = data.getMessage();
         const eventLogLevel = data.getLogLevel();
 
-        if (eventLogLevel === preferredLogLevel)
-            logger.log(message);
+        if (logLevels.includes(eventLogLevel)) logger.log(message);
     }
 }
 
 export class LogIntoFileListener extends LogListener {
-
-    listen(event: IEvent) {
-        const logger = new LoggerIntoFile(LoggingFileNames.LOG_INTO);
-        const preferredLogLevel = LogLevel.Debug;
-
-        this.log(event, preferredLogLevel, logger);
+    public listen(event: IEvent) {
+        this.logEvent(
+            event,
+            [LogLevel.Info, LogLevel.Debug, LogLevel.Error],
+            new LoggerIntoFile(LoggingFileNames.LOG_INTO),
+        );
     }
 }
 
 export class LogIntoConsoleListener extends LogListener {
-    listen(event: IEvent) {
-        const logger = new LoggerIntoConsole();
-        const preferredLogLevel = LogLevel.Info;
-
-        this.log(event, preferredLogLevel, logger);
+    public listen(event: IEvent) {
+        this.logEvent(
+            event,
+            [LogLevel.Info],
+            new LoggerIntoConsole()
+        );
     }
 }
 
 export class LogIntoRabbitmqListener extends LogListener {
-    listen(event: IEvent) {
-        const logger = new LoggerIntoRabbitmq(producer);
-        const preferredLogLevel = LogLevel.Error;
-
-        this.log(event, preferredLogLevel, logger);
+    public listen(event: IEvent) {
+        this.logEvent(
+            event,
+            [LogLevel.Error],
+            new LoggerIntoRabbitmq(producer)
+        );
     }
 }

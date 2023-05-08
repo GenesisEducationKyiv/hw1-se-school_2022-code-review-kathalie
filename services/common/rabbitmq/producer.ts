@@ -1,6 +1,5 @@
 import {Channel} from "amqplib";
 
-import {RabbitMQConfigs} from "../../logging-service/src/common/constants/rabbitmq-configs.js";
 import {RabbitMQ} from "./rabbitmq.js";
 
 export class RabbitMQProducer {
