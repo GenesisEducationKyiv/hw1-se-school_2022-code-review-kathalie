@@ -1,4 +1,5 @@
 export const Ports = {
-    EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT || 3000,
-    RATE_SERVER_PORT: process.env.EMAIL_SERVER_PORT || 5000
+    EMAIL_SERVER_PORT: process.env.EMAIL_SERVICE_PORT || 3001,
+    RATE_SERVER_PORT: process.env.RATE_SERVICE_PORT || 5001,
+    CUSTOMER_SERVER_PORT: process.env.CUSTOMER_SERVICE_PORT || 8082,
 }

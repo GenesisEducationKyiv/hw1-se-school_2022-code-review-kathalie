@@ -1,17 +1,21 @@
-import { HttpStatusCodes } from '../../../common/constants/http-status-codes.js';
+import {CommandBus} from "@nestjs/cqrs";
+import {Controller} from "@nestjs/common";
 
+import { HttpStatusCodes } from '../../../common/constants/http-status-codes.js';
 import { UserEmailAlreadyExistsError } from "../common/exceptions/email-exists-error.js";
 import { InvalidEmailError } from "../common/exceptions/invalid-email-error.js";
 import { EmailService } from "../services/email-service.js";
 import { Email } from "../models/email.js";
 import {rootEmail} from "../../../logging-service/src/di.logging.js";
+import {SubscribeSagaCommand} from "../services/saga/email-service.saga.js";
 
 const log = rootEmail.getChildCategory("Controller");
 
+@Controller('email')
 export class EmailController {
     private emailService: EmailService;
 
-    constructor(emailService: EmailService) {
+    constructor(private commandBus: CommandBus, emailService: EmailService) {
         this.emailService = emailService;
 
         log.debug(`Email Controller instance has been created`);
@@ -23,9 +27,10 @@ export class EmailController {
         try {
             let email = new Email(req.body.email);
 
-            await this.emailService.subscribe(email);
+            //this.emailService.subscribe(email);
+            const success = await this.commandBus.execute(new SubscribeSagaCommand(email));
 
-            endpointLog.debug(`${email} successfully subscribed`);
+            endpointLog.debug(`${email} ${success ? 'successfully subscribed' : 'failed to subscribe'}`);
 
             res.status(HttpStatusCodes.OK).send();
 

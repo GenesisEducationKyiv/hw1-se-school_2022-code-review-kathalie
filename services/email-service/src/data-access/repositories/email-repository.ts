@@ -27,6 +27,10 @@ export class EmailRepository implements IEmailRepository{
         return this.fileManager.addLine(email.address);
     }
 
+    remove(email: Email): boolean {
+        return this.fileManager.removeLine(email.address);
+    }
+
     isExists(email: Email): boolean {
         return this.fileManager.getContent().includes(email.address);
     }
